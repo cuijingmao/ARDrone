@@ -1,0 +1,308 @@
+[33mcommit f805e80b0f9cd7c6e51341c23f0d1bd9e94a0d77[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Tue Aug 30 11:56:33 2016 +0800
+
+    red ball ok
+
+[33mcommit da5f88b3e52cd643953968e0f4f4012e1055e8f6[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Tue Aug 30 10:45:36 2016 +0800
+
+    red ball error
+
+[33mcommit a465493f21820d5d524b3ab26958d5611a48efc1[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Mon Aug 29 20:53:34 2016 +0800
+
+    before add red ball
+
+[33mcommit ae2bcf2cdb47fc928c5648ce125613e70369d4b0[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Sun Aug 28 10:28:22 2016 +0800
+
+    add line
+
+[33mcommit 4c1adfea082561f1d56b2b130031c7b3d7adae6d[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Sat Aug 27 13:16:34 2016 +0800
+
+    red circles conflict done
+
+[33mcommit 9030fa1fc446eb873fdcd010be5e5604af8fda59[m
+Merge: 3878a5c c678602
+Author: shisy13 <shisy13@icloud.com>
+Date:   Sat Aug 27 13:10:40 2016 +0800
+
+    red range done
+
+[33mcommit 3878a5c75c408eac734f9f005eee620051545842[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Sat Aug 27 13:10:07 2016 +0800
+
+    red range
+
+[33mcommit c6786023b706624e40888100c037110aa5688c45[m
+Author: cui <cuijingmao12@163.com>
+Date:   Sat Aug 27 13:06:53 2016 +0800
+
+    circles done
+
+[33mcommit 62bde39782fb22177e6d3749d3aa39f78f519a94[m
+Merge: c479a42 b200e08
+Author: cui <cuijingmao12@163.com>
+Date:   Sat Aug 27 13:03:16 2016 +0800
+
+    Merge branch 'master' into CJM
+
+[33mcommit c479a42fc69e7e6bc4371b1afcb7ba0e675da377[m
+Author: cui <cuijingmao12@163.com>
+Date:   Sat Aug 27 12:46:20 2016 +0800
+
+    circletest
+
+[33mcommit b200e08cdbb76ff60a9eadd0e523b03ff4f520b6[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Sat Aug 27 11:53:34 2016 +0800
+
+    find Circles
+
+[33mcommit f6517293428c228291400da9848d4a240c92e958[m
+Author: cui <cuijingmao12@163.com>
+Date:   Sat Aug 27 11:18:41 2016 +0800
+
+    findCircles
+
+[33mcommit 005002dae53cb9cc1b8855e176c7700e3f546d61[m
+Merge: ac71d28 b398dec
+Author: cui <cuijingmao12@163.com>
+Date:   Sat Aug 27 10:29:51 2016 +0800
+
+    Merge branch 'master' of https://github.com/Shuriken13/ARDrone
+
+[33mcommit b398dec300b3163e578f22b8c3977e99f3922b80[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Sat Aug 27 10:22:28 2016 +0800
+
+    bitmap recycle
+
+[33mcommit ac71d2821886da60c0fef4767997bcda5a6fd029[m
+Author: cui <cuijingmao12@163.com>
+Date:   Fri Aug 26 10:40:54 2016 +0800
+
+    fix conflict
+
+[33mcommit 1ded7b78e958d3693c949bf069e0bcc0b0338e82[m
+Author: cui <cuijingmao12@163.com>
+Date:   Fri Aug 26 10:36:26 2016 +0800
+
+    littleerror
+
+[33mcommit 7de92ff585d3a43919f926b4613bc3f66ffd70e6[m
+Merge: 590d03c fbe88df
+Author: cui <cuijingmao12@163.com>
+Date:   Thu Aug 25 23:18:05 2016 +0800
+
+    comment1
+
+[33mcommit 590d03c07dfb3e38fc48acdc4f089f44b022aae7[m
+Author: cui <cuijingmao12@163.com>
+Date:   Thu Aug 25 23:14:36 2016 +0800
+
+    comment
+
+[33mcommit fbe88df6bfc067df1f0ae272a2dcd6fd9d65504a[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Thu Aug 25 22:54:21 2016 +0800
+
+    0825
+
+[33mcommit 0f2ee1391ae1674fa0bde62f19c3b221fc330770[m
+Author: cui <cuijingmao12@163.com>
+Date:   Thu Aug 25 19:16:35 2016 +0800
+
+    center 2
+
+[33mcommit cf8d84a67a0f44c5c36a1ae3cdc10be9cb963b3c[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Thu Aug 25 18:18:50 2016 +0800
+
+    pointf 1
+
+[33mcommit 5b812ae03c2254adcca8d822d4f641341bc6e421[m
+Merge: 64e86fc 2d2ae51
+Author: shisy13 <shisy13@icloud.com>
+Date:   Thu Aug 25 15:21:06 2016 +0800
+
+    Merge branch 'master' of github.com:Shuriken13/ARDrone
+
+[33mcommit 64e86fcfeb4ae8f1c5224b4626bbbe447ac4cc20[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Thu Aug 25 15:20:46 2016 +0800
+
+    black white
+
+[33mcommit 2d2ae51f7c7aaf9a2e9a1a9bd257daf6a0cf3543[m
+Author: cui <cuijingmao12@163.com>
+Date:   Thu Aug 25 15:18:49 2016 +0800
+
+    red to whitel
+
+[33mcommit d002ea4e7e07d6107038695a727148126cb5233a[m
+Author: cui <cuijingmao12@163.com>
+Date:   Thu Aug 25 12:42:25 2016 +0800
+
+    white black enter
+
+[33mcommit 1da4092cffb7f01344fcb0e6b4de1acdf166cda9[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Thu Aug 25 11:23:50 2016 +0800
+
+    threshold ok
+
+[33mcommit 6acc7c6e8cf9c8f8f23bda4a90cd0d3372784be8[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Thu Aug 25 11:16:02 2016 +0800
+
+    black white
+
+[33mcommit 2d483818093472e7337c34ff71cea700af0a1c2c[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Thu Aug 25 10:53:57 2016 +0800
+
+    hsv error
+
+[33mcommit 7d3f80d157393c6e1011b0d4d2bd1054ca00e7fe[m
+Author: cui <cuijingmao12@163.com>
+Date:   Thu Aug 25 08:33:32 2016 +0800
+
+    "filter"
+
+[33mcommit d055257bb5e1c201546a8ab6e6346853ac2f14a4[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Wed Aug 24 16:03:15 2016 +0800
+
+    upadate gallery
+
+[33mcommit 63adf4cca23891f760d5a0d86c66241e3ea44df3[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Wed Aug 24 15:48:55 2016 +0800
+
+    fix gallery
+
+[33mcommit f775426fe72c7cc6c08804ab4e3275f70fea9b42[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Wed Aug 24 13:09:39 2016 +0800
+
+    camera down ok
+
+[33mcommit 93ccd5f3094dab9f16b406282ae70e67d4b0a4cb[m
+Merge: 3bad8d0 d1c3445
+Author: shisy13 <shisy13@icloud.com>
+Date:   Wed Aug 24 11:50:08 2016 +0800
+
+    Merge branch 'SSY'
+
+[33mcommit d1c34451f6215b6ad9a26fb6356e94d7bc16c337[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Wed Aug 24 11:49:32 2016 +0800
+
+    0.2
+
+[33mcommit 3bad8d048ffbe614d4d87628c53ad164eecbc8cb[m
+Author: cui <cuijingmao12@163.com>
+Date:   Wed Aug 24 11:46:54 2016 +0800
+
+    correct i j
+
+[33mcommit 5a049b202d30d5e487dc6cec2d85f1c1a384e899[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Wed Aug 24 10:55:53 2016 +0800
+
+    add CJM
+
+[33mcommit 681c620c8f71b8b43a165b75976c22e938127800[m
+Merge: 29b98c3 1b24155
+Author: cui <cuijingmao12@163.com>
+Date:   Wed Aug 24 10:31:36 2016 +0800
+
+    Merge branch 'CJM'
+
+[33mcommit 1b2415541e7f0592753dd2f1dcc5793746586298[m
+Author: cui <cuijingmao12@163.com>
+Date:   Wed Aug 24 10:13:09 2016 +0800
+
+    red found
+
+[33mcommit 29b98c365eeada367e2763f2592ceb0bf0c9c756[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Wed Aug 24 10:12:25 2016 +0800
+
+    before merge CJM
+
+[33mcommit 495cdd8340edaed410e0baeb059defc5f3382ad9[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Mon Aug 22 22:57:28 2016 +0800
+
+    test process
+
+[33mcommit 466b5910af1fde8eee10a760e60ae0921e6892ff[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Mon Aug 22 21:55:30 2016 +0800
+
+    game activity
+
+[33mcommit 2e5ff3de5011d5ef018773ac858b318abe4b73b7[m
+Merge: df894c8 52ed8ad
+Author: shisy13 <shisy13@icloud.com>
+Date:   Mon Aug 22 20:08:13 2016 +0800
+
+    Merge branch 'master' of github.com:Shuriken13/ARDrone
+
+[33mcommit df894c88fca9860b055cb9617d310f3d0d062591[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Mon Aug 22 20:07:52 2016 +0800
+
+    before coding
+
+[33mcommit 52ed8ad59fa6db869775a4425d7c08ab864f6925[m
+Author: cui <cuijingmao12@163.com>
+Date:   Mon Aug 22 17:26:57 2016 +0800
+
+    update gradle
+
+[33mcommit edfbf034e262fec2e8b44352e36dae450722352a[m
+Merge: 40b0fcf 58dfc50
+Author: shisy13 <shisy13@icloud.com>
+Date:   Mon Aug 22 16:22:02 2016 +0800
+
+    Merge branch 'master' of github.com:Shuriken13/ARDrone
+
+[33mcommit 40b0fcf7cee2a8e58d151c140abe05cd3cdba3dd[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Mon Aug 22 16:21:37 2016 +0800
+
+    opencv done
+
+[33mcommit 58dfc508ac0e1339028a3e6440962a23ac1a5ebf[m
+Author: cui <cuijingmao12@163.com>
+Date:   Mon Aug 22 10:19:34 2016 +0800
+
+    add author
+
+[33mcommit 8a2db6b5887933a06869388bef34e33751cd6f4e[m
+Author: cui <cuijingmao12@163.com>
+Date:   Mon Aug 22 10:15:17 2016 +0800
+
+    add name
+
+[33mcommit 472b93bd660d0934503d8b9bb0efe460ce0197ef[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Mon Aug 22 09:17:13 2016 +0800
+
+    change readme
+
+[33mcommit 096e3c30f0961a2199ba0140438d5f517cc721ee[m
+Author: shisy13 <shisy13@icloud.com>
+Date:   Mon Aug 22 09:02:07 2016 +0800
+
+    init git
