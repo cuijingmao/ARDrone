@@ -125,9 +125,13 @@ public class GameHudViewController
 		
 		glView = new GLSurfaceView(context);
 		glView.setEGLContextClientVersion(2);
-		
+		/**
+		 * 界面设置在GameHudViewController中实现
+		 */
 		context.setContentView(glView);
-		
+		/**
+		 * 界面设置在GameHudViewController中实现
+		 */
 		renderer = new VideoStageRenderer(context, null);
 		
 		if (useSoftwareRendering){

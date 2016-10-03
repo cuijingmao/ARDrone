@@ -20,7 +20,7 @@
 
     <style name="dashboardButton" parent="@style/dashboardButtonBase">
         <item name="android:textSize">24sp</item>
-        <item name="android:paddingRight">3dip</item>
+        <item name="android:paddingRight">24dip</item>
         <item name="android:lineSpacingExtra">@dimen/dashboard_button_line_spacing</item>
     </style>
 

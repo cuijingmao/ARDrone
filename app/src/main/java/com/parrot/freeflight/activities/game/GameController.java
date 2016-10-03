@@ -47,8 +47,8 @@ public class GameController {
             controlService.switchCamera(); //切换为下摄像头
                 controlService.triggerTakeOff();//准备起飞
                 try {
-                 //   Thread.sleep(4000);     // wait takeoff
-                    Thread.sleep(4000);
+                    Thread.sleep(4000);     // wait takeoff
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

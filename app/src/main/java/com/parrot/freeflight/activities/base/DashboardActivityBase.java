@@ -3,6 +3,7 @@ package com.parrot.freeflight.activities.base;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.parrot.freeflight.R;
@@ -52,7 +54,26 @@ MediaStorageReceiverDelegate
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.dashboard_screen);
+		// added by cui
+		Point size = new Point();
+		getWindowManager().getDefaultDisplay().getSize(size);
+		int screenWidth = size.x;
+		int screenHeight = size.y;
 
+		btnFreeFlight = (CheckedTextView) findViewById(R.id.btnFreeFlight);
+		btnAcademy = (CheckedTextView) findViewById(R.id.btnAcademy);
+		btnPhotosVideos = (CheckedTextView) findViewById(R.id.btnPhotosVideos);
+		btnFirmwareUpdate = (CheckedTextView) findViewById(R.id.btnFirmwareUpdate);
+		btnParrotGames = (CheckedTextView) findViewById(R.id.btnGames);
+		btnGetYourDrone = (CheckedTextView) findViewById(R.id.btnGetYourDrone);
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(screenWidth /3, (screenHeight-28)/2);
+		btnFreeFlight.setLayoutParams(layoutParams);
+		btnAcademy.setLayoutParams(layoutParams);
+		btnPhotosVideos.setLayoutParams(layoutParams);
+		btnFirmwareUpdate.setLayoutParams(layoutParams);
+		btnParrotGames.setLayoutParams(layoutParams);
+		btnGetYourDrone.setLayoutParams(layoutParams);
+		// added by cui
 		View headerView = findViewById(R.id.header_preferences);
 
 		header = new StatusBar(this, headerView);

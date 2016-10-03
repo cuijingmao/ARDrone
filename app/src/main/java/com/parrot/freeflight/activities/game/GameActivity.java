@@ -149,9 +149,7 @@ public class GameActivity
         {
             droneControlService = ((DroneControlService.LocalBinder) service).getService();
             onDroneServiceConnected();
-            /**
-             * 界面设置在GameController中实现
-             */
+
             gameController = new GameController(GameActivity.this, droneControlService);
             gameController.start();
         }
@@ -206,9 +204,13 @@ public class GameActivity
         running = false;
 
         initRegularJoystics();
-
+        /**
+         * 界面设置在GameHudViewController中实现
+         */
         view = new GameHudViewController(this, useSoftwareRendering);
-
+        /**
+         * 界面设置在GameHudViewController中实现
+         */
         wifiSignalReceiver = new WifiSignalStrengthChangedReceiver(this);
         videoRecordingStateReceiver = new DroneVideoRecordingStateReceiver(this);
         droneEmergencyReceiver = new DroneEmergencyChangeReceiver(this);

@@ -140,9 +140,9 @@
     <!-- browser string -->
     <string name="browser_error">Error: Could not connect to the server</string>
     <string name="browser_done">Done</string>
-    <string name="ARDRONE_ACADEMY">AR.DRONE\nACADEMY</string>
+    <string name="ARDRONE_ACADEMY">实时路况</string>
     <string name="PHOTOS_VIDEOS">PHOTOS\nVIDEOS</string>
-    <string name="ARDRONE_UPDATE">AR.DRONE\nUPDATE</string>
+    <string name="ARDRONE_UPDATE">更新</string>
     <string name="PILOTING">PILOTING</string>
     <string name="GAMES">GAMES</string>
     <string name="DEMO">DEMO</string>
