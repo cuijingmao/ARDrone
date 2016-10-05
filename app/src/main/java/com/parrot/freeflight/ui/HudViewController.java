@@ -252,7 +252,8 @@ public class HudViewController
 //		renderer.addSprite(CAMERA_ID, btnCameraSwitch);
 //		renderer.addSprite(ALERT_ID, btnEmergency);
 		renderer.addSprite(TAKE_OFF_ID, btnTakeOff);  //此句使得 landoff起飞按钮管用
-//		renderer.addSprite(LAND_ID, btnLand);
+      	renderer.addSprite(LAND_ID, btnLand);         //若没有此句，点击了起飞后，没法降落！
+
 //		renderer.addSprite(BATTERY_INDICATOR_ID, batteryIndicator);
 //		renderer.addSprite(WIFI_INDICATOR_ID, wifiIndicator);
 //		renderer.addSprite(EMERGENCY_LABEL_ID, txtAlert);
