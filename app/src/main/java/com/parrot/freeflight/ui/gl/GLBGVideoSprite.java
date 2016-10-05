@@ -17,6 +17,8 @@ public class GLBGVideoSprite extends GLSprite
 	private android.graphics.Matrix matrix;
 	private Object videoFrameLock;
 	private Bitmap video;
+	//added by cui
+	private Bitmap  videoBitmap;
 	private float videoSize[]  = {0,0, //image width, height
 			                    0,0}; //
 	public int screenWidth;
@@ -106,7 +108,7 @@ public class GLBGVideoSprite extends GLSprite
 			
 			if (getVideoFrameNative(video, videoSize)) {
 				// added by cui
-			//''	video=ImageProcessor.RecognisePath(video);
+				video	=ImageProcessor.convertToBlackWhite(videoBitmap, ColorType.RED);
 				//added by cui
 				if (matrix == null) {
 					matrix = new android.graphics.Matrix();

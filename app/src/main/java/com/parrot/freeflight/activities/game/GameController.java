@@ -23,10 +23,11 @@ public class GameController {
     GameActivity gameActivity;
     DroneControlService controlService;
     boolean  toTrackBALL;   //设置点击切换摄像头时是否由跟踪路径模式切换为跟踪小球模式
+    GameHudViewController view;
     Timer commandTimer;
     Thread controlThread;
     ImageToCommand imageToCommand;
-    int ardroneStatus = 0;
+    int ardroneStatus = 0;  //0表示再飞行，-1表示未在飞行
 
     public GameController(GameActivity gameActivity, DroneControlService controlService) {
         this.gameActivity = gameActivity;
@@ -44,10 +45,11 @@ public class GameController {
         controlThread = new Thread(new Runnable() {
             @Override
             public void run() {
-            controlService.switchCamera(); //切换为下摄像头
+             controlService.switchCamera(); //切换为下摄像头
                 controlService.triggerTakeOff();//准备起飞
+                Log.e("注意！","飞行器起飞!");
                 try {
-                    Thread.sleep(4000);     // wait takeoff
+                    Thread.sleep(2000);     // wait takeoff
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -224,5 +226,10 @@ public class GameController {
         controlService.triggerTakeOff();
         ardroneStatus = -1;
         controlThread.interrupt();
+        //added by cui
+       // view.setIsFlying(false);
+        //added by cui
     }
+
+
 }

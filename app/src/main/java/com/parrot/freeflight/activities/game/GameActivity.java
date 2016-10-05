@@ -705,7 +705,16 @@ public class GameActivity
             view.setJoysticks(joystickRight, joystickLeft);
         }
     }
+    //added by cui
+    @Override
+    protected void onStop(){
+        super.onStop();
+       // gameController.stop();
+      //  droneControlService.pause();
+        view.setIsFlying(false);
+    }
 
+    //added by cui
     @Override
     protected void onDestroy()
     {
@@ -723,8 +732,8 @@ public class GameActivity
         super.onDestroy();
         Log.d(TAG, "GameActivity destroyed");
         System.gc();
+       gameController.stop();
 
-//        gameController.stop();
     }
 
     private void registerReceivers()
@@ -830,6 +839,9 @@ public class GameActivity
     @Override
     public void onDroneFlyingStateChanged(boolean flying)
     {
+        /**
+         * 判断是否在飞行的标志
+         */
         this.flying = flying;
         view.setIsFlying(flying);
 
