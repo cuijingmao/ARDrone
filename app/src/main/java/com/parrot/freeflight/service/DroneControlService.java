@@ -27,7 +27,6 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-
 import com.parrot.freeflight.drone.DroneAcademyMediaListener;
 import com.parrot.freeflight.drone.DroneConfig;
 import com.parrot.freeflight.drone.DroneConfig.EDroneVersion;
@@ -257,7 +256,7 @@ public class DroneControlService extends Service
 
 
 	/*
-     * Drone control methods
+	 * Drone control methods
 	 */
 
     /**
@@ -381,6 +380,7 @@ public class DroneControlService extends Service
     }
 
 
+
     /**
      * Returns copy of current drone's config.
      *
@@ -440,7 +440,7 @@ public class DroneControlService extends Service
     }
 
 	/*
-     * Methods for controlling the gaz, roll, pitch and yaw directly
+	 * Methods for controlling the gaz, roll, pitch and yaw directly
 	 */
 
     /**
@@ -525,7 +525,7 @@ public class DroneControlService extends Service
 
 
 	/*
-     * Protected methods
+	 * Protected methods
 	 */
 
     protected void setState(ServiceStateBase state) {
@@ -599,9 +599,6 @@ public class DroneControlService extends Service
         Log.d(TAG, "====>>> DRONE CONTROL SERVICE RESUMED");
     }
 
-    /**
-     * 判断起飞降落
-     */
 
     protected void onTookOff() {
         Intent intent = intentCache.get(DRONE_FLYING_STATE_CHANGED_ACTION);
@@ -610,10 +607,6 @@ public class DroneControlService extends Service
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
 
-    /**
-     * 判断起飞降落
-     */
-
 
     protected void onLanded() {
         Intent intent = intentCache.get(DRONE_FLYING_STATE_CHANGED_ACTION);
@@ -621,9 +614,7 @@ public class DroneControlService extends Service
 
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
-    /**
-     * 判断起飞降落
-     */
+
 
     protected void onBatteryStateChanged(int batteryStatus) {
         Intent intent = intentCache.get(DRONE_BATTERY_CHANGED_ACTION);
@@ -843,21 +834,12 @@ public class DroneControlService extends Service
                     onRecordChanged(navData.recording, navData.usbActive, navData.usbRemainingTime);
                     onCameraReadyChanged(navData.cameraReady);
                     onRecordReadyChanged(navData.recordReady);
-                    /**
-                     * 判断起飞降落
-                     *
-                     */
 
                     if (navData.flying) {
                         onTookOff();
                     } else {
                         onLanded();
                     }
-                    /**
-                     * 判断起飞降落
-                     *
-                     */
-
 
                     if ((navData.recording != prevNavData.recording) && navData.recording && navData.usbActive && navData.usbRemainingTime == 0 && droneProxy.getConfig().isRecordOnUsb()) {
                         // Stopping recording because we have not enough space left on USB.

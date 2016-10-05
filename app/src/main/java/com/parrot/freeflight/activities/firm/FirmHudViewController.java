@@ -148,7 +148,7 @@ public class FirmHudViewController
             /**
              *此处  控制了FirmActivity的界面
              */
-			//root.addView(canvasView, 0);
+//			root.addView(canvasView, 0);
         }
 
 
@@ -473,6 +473,7 @@ public class FirmHudViewController
             }
         }
     }
+
 
     public void setUsbIndicatorEnabled(boolean enabled) {
         if (enabled) {

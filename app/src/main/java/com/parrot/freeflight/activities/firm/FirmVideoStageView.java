@@ -173,7 +173,7 @@ implements
                 timePrevFrame = System.currentTimeMillis();
 
                 try {
-		//		renderer.updateVideoFrame();
+//            	  	renderer.updateVideoFrame();
                 	c = surfaceHolder.lockCanvas(null);
 
 //                	synchronized (surfaceHolder) {

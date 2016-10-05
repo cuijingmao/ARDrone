@@ -205,14 +205,10 @@ public class ControlDroneActivity
         acceleroEnabled = false;
         running = false;
 
-        initRegularJoystics();
-/**
- * 控制界面显示
- */
+        initRegularJoystics();       
+
         view = new HudViewController(this, useSoftwareRendering);
-/**
- * 控制界面显示
- */
+
         wifiSignalReceiver = new WifiSignalStrengthChangedReceiver(this);
         videoRecordingStateReceiver = new DroneVideoRecordingStateReceiver(this);
         droneEmergencyReceiver = new DroneEmergencyChangeReceiver(this);
@@ -821,7 +817,7 @@ public class ControlDroneActivity
         this.flying = flying;
         view.setIsFlying(flying);
 
-        updateBackButtonState();  //设置后退键是否能用，默认是飞行状态不能用，降落后能用
+        updateBackButtonState();
     }
 
     @SuppressLint("NewApi")
