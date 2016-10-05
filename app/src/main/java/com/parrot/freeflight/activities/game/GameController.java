@@ -45,7 +45,7 @@ public class GameController {
             @Override
             public void run() {
             controlService.switchCamera(); //切换为下摄像头
-                controlService.triggerTakeOff();//准备起飞
+             //   controlService.triggerTakeOff();//准备起飞
                 try {
                     Thread.sleep(4000);     // wait takeoff
 

@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -15,6 +18,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.parrot.freeflight.R;
 import com.parrot.freeflight.activities.ControlDroneActivity;
@@ -34,12 +39,13 @@ public class GameConnectActivity
 {
 
     private static final int[] TIPS = {
-            R.layout.hint_screen_joypad_mode, R.layout.hint_screen_absolute_control, R.layout.hint_screen_record,
-            R.layout.hint_screen_usb, R.layout.hint_screen_switch,
-            R.layout.hint_screen_landing, R.layout.hint_screen_take_off, R.layout.hint_screen_emergency,
-            R.layout.hint_screen_altitude, R.layout.hint_screen_hovering,
+          //  R.layout.hint_screen_joypad_mode, R.layout.hint_screen_absolute_control, R.layout.hint_screen_record,
+          //  R.layout.hint_screen_usb, R.layout.hint_screen_switch,
+           // R.layout.hint_screen_landing, R.layout.hint_screen_take_off, R.layout.hint_screen_emergency,
+        //    R.layout.hint_screen_altitude, R.layout.hint_screen_hovering,
             // R.layout.hint_screen_geolocation,
-            R.layout.hint_screen_share, R.layout.hint_screen_flip
+        //    R.layout.hint_screen_share, R.layout.hint_screen_flip
+            R.drawable.background1
     };
 
     private static final String TAG = GameConnectActivity.class.getSimpleName();
@@ -49,7 +55,9 @@ public class GameConnectActivity
 
     private BroadcastReceiver droneReadyReceiver;
     private BroadcastReceiver droneConnectionChangeReceiver;
-
+    //added by cui
+  ImageView imageView;
+    Bitmap  bmp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -58,13 +66,26 @@ public class GameConnectActivity
 
         Random random = new Random(System.currentTimeMillis());
         int tipNumber = random.nextInt(TIPS.length);
+//
+//        if (!SystemUtils.isGoogleTV(this)) {
+//            setContentView(TIPS[tipNumber]);
+//        } else {
+//            setContentView(R.layout.remote_instructions);
+//            prepareGoogleTVControls();
+//        }
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        int screenWidth = size.x;
+        int screenHeight = size.y;
+        setContentView(R.layout.afterconnectimage);
+        imageView=(ImageView) findViewById(R.id.afterConnectImage);
+        bmp= BitmapFactory.decodeResource(getResources(),TIPS[tipNumber]);
 
-        if (!SystemUtils.isGoogleTV(this)) {
-            setContentView(TIPS[tipNumber]);
-        } else {
-            setContentView(R.layout.remote_instructions);
-            prepareGoogleTVControls();
-        }
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(screenWidth , screenHeight);
+        imageView.setLayoutParams(layoutParams);
+        imageView.setImageBitmap(bmp);
+
 
         droneReadyReceiver = new DroneReadyReceiver(this);
         droneConnectionChangeReceiver = new DroneConnectionChangedReceiver(this);
