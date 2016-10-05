@@ -3,6 +3,7 @@ package com.parrot.freeflight.activities.game;
 import android.util.Log;
 
 import com.parrot.freeflight.activities.image.ColorType;
+import com.parrot.freeflight.activities.image.ImageProcessor;
 import com.parrot.freeflight.activities.image.ImageToCommand;
 import com.parrot.freeflight.service.DroneControlService;
 
@@ -27,6 +28,8 @@ public class GameController {
     Thread controlThread;
     ImageToCommand imageToCommand;
     int ardroneStatus = 0;
+    GameCommand gameCommand=new GameCommand();
+    int end=GameCommand.n-1;
 
     public GameController(GameActivity gameActivity, DroneControlService controlService) {
         this.gameActivity = gameActivity;
@@ -70,8 +73,8 @@ public class GameController {
                 int flyAboveYellowCount = 0;  //飞行器飘过黄色圆上方的次数
 //                ColorType colorType;  //标明识别球的颜色
 //                TaskMode taskMode ;   //默认跟踪路径
-                GameCommand mainCommand = new GameCommand();
-                GameCommand command;
+//                GameCommand mainCommand = new GameCommand();
+//                GameCommand command;
                 boolean isAboveStopSign = false;        //是否已经在停止标记上方
                 Log.e(LOG_TAG, "开始进入循环");
                 while (ardroneStatus == 0 && !Thread.currentThread().isInterrupted()) {
@@ -82,13 +85,14 @@ public class GameController {
                     //boolean ball = true; //true代表找小球，false表示沿路径
                     //     GameCommand command = imageToCommand.getCommandBall(colorType);//寻找小球的主要函数
                     // command = imageToCommand.getCommand(mainCommand.taskMode, mainCommand.colorType); // 寻找路径的主要函数
-                    command = imageToCommand.getCommand(TaskMode.TRACKBALL, ColorType.RED); // 寻找路径的主要函数
+                   gameCommand = imageToCommand.getCommand(TaskMode.TRACKBALL, ColorType.RED,gameCommand); // 寻找路径的主要函数
+                    gameCommand= ImageToCommand.pidGameCommand(gameCommand);
 //                    mainCommand.taskMode = command.taskMode;
 //                    mainCommand.colorType = command.colorType;
-                    if (mainCommand.taskMode == TaskMode.FOLLOWPATH && mainCommand.colorType == ColorType.YELLOW) {
+                    if (gameCommand.taskMode == TaskMode.FOLLOWPATH && gameCommand.colorType == ColorType.YELLOW) {
                         //此时已经飞到终点附近,在靠近黄色停止标志的过程中
-                        double x = Math.abs(command.relativePosition[0]);
-                        double y = Math.abs(command.relativePosition[1]);
+                        double x = Math.abs(gameCommand.centersX[end]);
+                        double y = Math.abs(gameCommand.centersY[end]);
                         if (x < xThre && y < yThre) { //大约在黄色停止标志的上方
                             if (flyAboveYellowCount < 100) {
                                 flyAboveYellowCount = flyAboveYellowCount + 1;
@@ -99,10 +103,10 @@ public class GameController {
                         isAboveStopSign = true;
                     }
 
-                    if (mainCommand.taskMode == TaskMode.FOLLOWPATH && isAboveStopSign) {
+                    if (gameCommand.taskMode == TaskMode.FOLLOWPATH && isAboveStopSign) {
                         //如果还在沿路飞行阶段，且已经飞在黄色停止标记上方
                         controlService.switchCamera(); //切换为上镜头，跟踪小球
-                        mainCommand.taskMode = TaskMode.TRACKBALL;//切换为跟踪小球模式
+                        gameCommand.taskMode = TaskMode.TRACKBALL;//切换为跟踪小球模式
                         Log.e(LOG_TAG, "已经切换为跟踪小球模式");
                         /**
                          * 此处可以加入播放警告声音，翻转等动作，
@@ -120,7 +124,7 @@ public class GameController {
                     }
 
 
-                    if (command.command.equals("stable")) {//如果命令是悬停
+                    if (gameCommand.command.equals("stable")) {//如果命令是悬停
                         controlService.setProgressiveCommandEnabled(false);//让平移指令失效
                         controlService.setYaw(0.0f);//正值向右转头，负值向左转头
                         controlService.setRoll(0.0f);//正值向右平移，负值向左平移
@@ -128,21 +132,21 @@ public class GameController {
                         controlService.setGaz(0.0f);//正值上升，负值下降
                     } else {
 
-                        if (command.taskMode == TaskMode.TRACKBALL) {//如果是跟踪小球模式
+                        if (gameCommand.taskMode == TaskMode.TRACKBALL) {//如果是跟踪小球模式
                             controlService.setProgressiveCommandEnabled(false);//
                             controlService.setProgressiveCommandCombinedYawEnabled(false);//
-                            controlService.setGaz(command.gaz);//上升下降
-                            controlService.setYaw(command.yaw);//左右转
+                            controlService.setGaz((float)gameCommand.gaze[end]);//上升下降
+                            controlService.setYaw((float)gameCommand.yaw[end]);//左右转
                             controlService.setRoll(0.0f);//不左右平移
                             controlService.setPitch(0.0f);//不前进后
                         } else {//处理跟踪路径模式
-                            if (command.yaw != 0) {//表示可以转头
+                            if (gameCommand.yaw[GameCommand.n-1] != 0) {//表示可以转头
                                 controlService.setProgressiveCommandEnabled(true);
                                 controlService.setProgressiveCommandCombinedYawEnabled(true);
-                                controlService.setYaw(command.yaw);
-                                controlService.setPitch(command.pitch);
-                                controlService.setRoll(command.roll);
-                                controlService.setGaz(command.gaz);
+                                controlService.setYaw((float)gameCommand.yaw[end]);
+                                controlService.setPitch((float)gameCommand.pitch[end]);
+                                controlService.setRoll((float)gameCommand.roll[end]);
+                                controlService.setGaz((float)gameCommand.gaze[end]);
 
 //                            try {
 //                                Thread.sleep(500);
@@ -150,10 +154,10 @@ public class GameController {
 //                                e.printStackTrace();
 //                            }
                             } else {//如果不能转头
-                                controlService.setGaz(command.gaz);
-                                controlService.setYaw(command.yaw);
-                                controlService.setPitch(command.pitch);
-                                controlService.setRoll(command.roll);
+                                controlService.setGaz((float)gameCommand.gaze[end]);
+                                controlService.setYaw((float)gameCommand.yaw[end]);
+                                controlService.setPitch((float)gameCommand.pitch[end]);
+                                controlService.setRoll((float)gameCommand.roll[end]);
                                 controlService.setProgressiveCommandEnabled(true);
                                 controlService.setProgressiveCommandCombinedYawEnabled(false);
                             }

@@ -35,9 +35,6 @@ public class ImageProcessor {
     static GLBGVideoSprite glbgVideoSprite;
 
     static final String LOG_TAG = ImageProcessor.class.getSimpleName();
-//    public enum  ColorType {
-//        RED,YELLOW,GREEN,BLUE
-//    }
 
     public ImageProcessor() {
     }
@@ -55,8 +52,8 @@ public class ImageProcessor {
         int height = image.getHeight();
         // Bitmap bitmap = image.copy(Bitmap.Config.ARGB_8888, false);
         Bitmap bitmap;
-        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        bitmap = convertToBlackWhite(image, ColorType.RED);
+//        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);/
+        bitmap = convertToBlackWhite(image, ColorType.BLUE);
 //        Mat mat=new Mat();
 //        Utils.bitmapToMat(image,mat);
 //       mat=hsvFilter(mat,ColorType.RED);
@@ -296,20 +293,23 @@ public class ImageProcessor {
         Mat mat = new Mat();
         switch (color) {
             case RED:
-             //   Log.e(LOG_TAG + "hsvFilter", "hsv通道分离识别红色");
+                //   Log.e(LOG_TAG + "hsvFilter", "hsv通道分离识别红色");
 //                Core.inRange(originHSV, new Scalar(0, 80, 70), new Scalar(0, 255, 255), lower);  //By Shi
 //                Core.inRange(originHSV, new Scalar(100, 100, 70), new Scalar(130, 255, 255), upper);//By Shi
                 Core.inRange(originHSV, new Scalar(0, 80, 40), new Scalar(0, 255, 255), lower);  //By cui
-                Core.inRange(originHSV, new Scalar(100, 100, 40), new Scalar(130,255, 255), upper);//By cui
+                Core.inRange(originHSV, new Scalar(100, 100, 40), new Scalar(130, 255, 255), upper);//By cui
                 Core.addWeighted(lower, 1.0, upper, 1.0, 0.0, mat);
                 break;
             case YELLOW:
                 Core.inRange(originHSV, new Scalar(70, 70, 70), new Scalar(100, 255, 255), mat);
-             //   Log.e(LOG_TAG + "hsvFilter", "hsv通道分离识别黄色");
+                //   Log.e(LOG_TAG + "hsvFilter", "hsv通道分离识别黄色");
                 break;
+            case BLUE:
+                Core.inRange(originHSV, new Scalar(0, 40, 40), new Scalar(30, 255, 255), mat);
         }
 
         Imgproc.GaussianBlur(mat, mat, new Size(9, 9), 2, 2);  //高斯滤波
+        origin.release();
         return mat;
     }
 
@@ -471,7 +471,7 @@ public class ImageProcessor {
         double fy = scale;  //长度缩放比例
         Mat resizedMat = new Mat();
         Imgproc.resize(blackWhite, resizedMat, size, fx, fy, Imgproc.INTER_LINEAR); //线性插值，缩小图形2倍
-     //   Log.e(LOG_TAG + "_lookForBall", "开始定位" + color.getName() + "球！");
+        //   Log.e(LOG_TAG + "_lookForBall", "开始定位" + color.getName() + "球！");
         Mat circles = new Mat();
         Imgproc.HoughCircles(resizedMat, circles, Imgproc.CV_HOUGH_GRADIENT, 2, 100, iCannyUpperThreshold, iAccumulator, iMinRadius, iMaxRadius); //hough变换找圆
         Log.e(LOG_TAG + "_lookForBall", "霍夫圆检测,共检测出 " + circles.cols() + "个" + color.getName() + "球");
@@ -480,7 +480,7 @@ public class ImageProcessor {
             return Ball;
         }
         if (circles.cols() > 1) {
-        //    Log.e(LOG_TAG + "_lookForBall", "红球个数多于一个！将只定位半径最大的" + color.getName() + "球！");
+            //    Log.e(LOG_TAG + "_lookForBall", "红球个数多于一个！将只定位半径最大的" + color.getName() + "球！");
         }
         //寻找半径最大的球
         for (int i = 0; i < circles.cols(); i++) {
@@ -495,10 +495,10 @@ public class ImageProcessor {
                 Log.e(LOG_TAG + "_lookForBall", color.getName() + "球半径" + radius);
             }
         }
-     //   Log.d(LOG_TAG + "_lookForBall", "已定位" + color.getName() + "球位置!");
+        //   Log.d(LOG_TAG + "_lookForBall", "已定位" + color.getName() + "球位置!");
         timePos = System.currentTimeMillis();
         long timeUsed = timePos - timePre;
-    //    Log.e(LOG_TAG + "_lookForBall", "函数lookForBall用时：" + timeUsed + "毫秒");
+        //    Log.e(LOG_TAG + "_lookForBall", "函数lookForBall用时：" + timeUsed + "毫秒");
         return Ball;
     }
 
@@ -517,7 +517,10 @@ public class ImageProcessor {
         Utils.bitmapToMat(video, mat);
         Mat blackWhite = hsvFilter(mat, colorType);
         Utils.matToBitmap(blackWhite, bitmap);
+        //video.recycle();
+       // System.gc();
         return bitmap;
+
     }
 
     /**

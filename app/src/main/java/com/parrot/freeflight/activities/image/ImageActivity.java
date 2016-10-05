@@ -56,7 +56,7 @@ public class ImageActivity extends Activity {
         imageBefore.setLayoutParams(layoutParams);
         imageAfter.setLayoutParams(layoutParams);
 
-        before = BitmapFactory.decodeResource(getResources(), R.drawable.redpath);
+        before = BitmapFactory.decodeResource(getResources(), R.drawable.blueball3);
         imageBefore.setImageBitmap(before);
     }
 
