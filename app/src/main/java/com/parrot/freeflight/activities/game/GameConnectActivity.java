@@ -45,7 +45,7 @@ public class GameConnectActivity
         //    R.layout.hint_screen_altitude, R.layout.hint_screen_hovering,
             // R.layout.hint_screen_geolocation,
         //    R.layout.hint_screen_share, R.layout.hint_screen_flip
-            R.drawable.background1
+            R.drawable.high
     };
 
     private static final String TAG = GameConnectActivity.class.getSimpleName();
@@ -75,6 +75,7 @@ public class GameConnectActivity
 //        }
         Point size = new Point();
         getWindowManager().getDefaultDisplay().getSize(size);
+
         int screenWidth = size.x;
         int screenHeight = size.y;
         setContentView(R.layout.afterconnectimage);

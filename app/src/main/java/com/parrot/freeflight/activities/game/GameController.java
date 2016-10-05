@@ -44,8 +44,8 @@ public class GameController {
         controlThread = new Thread(new Runnable() {
             @Override
             public void run() {
-            controlService.switchCamera(); //切换为下摄像头
-             //   controlService.triggerTakeOff();//准备起飞
+        //  controlService.switchCamera(); //切换为下摄像头
+                controlService.triggerTakeOff();//准备起飞
                 try {
                     Thread.sleep(4000);     // wait takeoff
 
@@ -82,7 +82,7 @@ public class GameController {
                     //boolean ball = true; //true代表找小球，false表示沿路径
                     //     GameCommand command = imageToCommand.getCommandBall(colorType);//寻找小球的主要函数
                     // command = imageToCommand.getCommand(mainCommand.taskMode, mainCommand.colorType); // 寻找路径的主要函数
-                    command = imageToCommand.getCommand(TaskMode.FOLLOWPATH, ColorType.RED); // 寻找路径的主要函数
+                    command = imageToCommand.getCommand(TaskMode.TRACKBALL, ColorType.RED); // 寻找路径的主要函数
 //                    mainCommand.taskMode = command.taskMode;
 //                    mainCommand.colorType = command.colorType;
                     if (mainCommand.taskMode == TaskMode.FOLLOWPATH && mainCommand.colorType == ColorType.YELLOW) {
