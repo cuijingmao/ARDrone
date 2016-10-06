@@ -46,7 +46,7 @@ public class NavData
 	{
 		batteryStatus = 0;
 		emergencyState = ERROR_STATE_NONE;
-		flying = false;
+		flying = false;      //默认不在飞
 		initialized = false;
 		usbActive = false;
 		usbRemainingTime = -1;

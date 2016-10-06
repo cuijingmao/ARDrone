@@ -548,8 +548,8 @@ implements
 	
     private void onNotifyAboutGPSDisabled()
     {
-        showAlertDialog(getString(R.string.Location_services_alert), getString(R.string.If_you_want_to_store_your_location_anc_access_your_media_enable_it),
-          null);
+//        showAlertDialog(getString(R.string.Location_services_alert), getString(R.string.If_you_want_to_store_your_location_anc_access_your_media_enable_it),
+//          null);
     }
     
     private void onNotifyAboutUSBStickRemove()

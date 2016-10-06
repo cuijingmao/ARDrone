@@ -498,7 +498,7 @@ public class ImageProcessor {
         //   Log.d(LOG_TAG + "_lookForBall", "已定位" + color.getName() + "球位置!");
         timePos = System.currentTimeMillis();
         long timeUsed = timePos - timePre;
-        //    Log.e(LOG_TAG + "_lookForBall", "函数lookForBall用时：" + timeUsed + "毫秒");
+         Log.e(LOG_TAG + "_lookForBall", "函数lookForBall用时：" + timeUsed + "毫秒");
         return Ball;
     }
 

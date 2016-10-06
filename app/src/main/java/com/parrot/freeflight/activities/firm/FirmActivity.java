@@ -149,7 +149,7 @@ public class FirmActivity
     private DroneProxy droneProxy;
     private List<ButtonController> buttonControllers;
 
-    FirmController gameController;
+    FirmController firmController;
 
     private ServiceConnection mConnection = new ServiceConnection()
     {
@@ -161,8 +161,8 @@ public class FirmActivity
             /**
              * 界面设置在GameController中实现
              */
-            gameController = new FirmController(FirmActivity.this, droneControlService);
-            gameController.start();
+           firmController = new FirmController(FirmActivity.this, droneControlService);
+            //firmController.start();
         }
 
         public void onServiceDisconnected(ComponentName name)
@@ -805,7 +805,7 @@ public class FirmActivity
 
         System.gc();
         super.onPause();
-        gameController.stop();
+       firmController.stop();
     }
 
     /**

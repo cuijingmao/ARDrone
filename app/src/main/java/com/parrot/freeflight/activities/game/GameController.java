@@ -47,8 +47,8 @@ public class GameController {
         controlThread = new Thread(new Runnable() {
             @Override
             public void run() {
-        //  controlService.switchCamera(); //切换为下摄像头
-                controlService.triggerTakeOff();//准备起飞
+          controlService.switchCamera(); //切换为下摄像头
+              controlService.triggerTakeOff();//准备起飞
                 try {
                     Thread.sleep(4000);     // wait takeoff
 
@@ -83,10 +83,10 @@ public class GameController {
                     timePre = System.currentTimeMillis();
 
                     //boolean ball = true; //true代表找小球，false表示沿路径
-                    //     GameCommand command = imageToCommand.getCommandBall(colorType);//寻找小球的主要函数
-                    // command = imageToCommand.getCommand(mainCommand.taskMode, mainCommand.colorType); // 寻找路径的主要函数
-                   gameCommand = imageToCommand.getCommand(TaskMode.TRACKBALL, ColorType.RED,gameCommand); // 寻找路径的主要函数
+                   gameCommand = imageToCommand.getCommand(TaskMode.FOLLOWPATH, ColorType.RED,gameCommand); // 寻找路径的主要函数
+                    Log.e(LOG_TAG,"this line before pidGameCommand!");
                     gameCommand= ImageToCommand.pidGameCommand(gameCommand);
+                    Log.e(LOG_TAG,"pidGameCommand hase run once successfully !");
 //                    mainCommand.taskMode = command.taskMode;
 //                    mainCommand.colorType = command.colorType;
                     if (gameCommand.taskMode == TaskMode.FOLLOWPATH && gameCommand.colorType == ColorType.YELLOW) {
@@ -130,6 +130,7 @@ public class GameController {
                         controlService.setRoll(0.0f);//正值向右平移，负值向左平移
                         controlService.setPitch(0.0f);//正值向后，负值向前
                         controlService.setGaz(0.0f);//正值上升，负值下降
+                        Log.e(LOG_TAG,"this line 132!");
                     } else {
 
                         if (gameCommand.taskMode == TaskMode.TRACKBALL) {//如果是跟踪小球模式
@@ -139,6 +140,7 @@ public class GameController {
                             controlService.setYaw((float)gameCommand.yaw[end]);//左右转
                             controlService.setRoll(0.0f);//不左右平移
                             controlService.setPitch(0.0f);//不前进后
+                            Log.e(LOG_TAG,"this line 142!");
                         } else {//处理跟踪路径模式
                             if (gameCommand.yaw[GameCommand.n-1] != 0) {//表示可以转头
                                 controlService.setProgressiveCommandEnabled(true);
