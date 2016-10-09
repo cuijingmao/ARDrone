@@ -49,7 +49,7 @@ public class PicDemoActivity extends Activity {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(screenWidth / 2, screenHeight);
         imageBefore.setLayoutParams(layoutParams);
         imageAfter.setLayoutParams(layoutParams);
-        before = BitmapFactory.decodeResource(getResources(), R.drawable.t);
+        before = BitmapFactory.decodeResource(getResources(), R.drawable.blueball);
         imageBefore.setImageBitmap(before);
 
 //
@@ -107,35 +107,33 @@ public class PicDemoActivity extends Activity {
         super.onResume();
 
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, new BaseLoaderCallback(this) {
-            @Override
-            public void onManagerConnected(int status) {
-                switch (status) {
-                    case LoaderCallbackInterface.SUCCESS: {
-                        Log.i(LOG_TAG, "OpenCV loaded successfully");
+                    @Override
+                    public void onManagerConnected(int status) {
+                        switch (status) {
+                            case LoaderCallbackInterface.SUCCESS: {
+                                Log.i(LOG_TAG, "OpenCV loaded successfully");
 
-                        after = imageProcessor.processImage(before);
-                        imageAfter.setImageBitmap(after);
+                                after = imageProcessor.processImage(before);
+                                imageAfter.setImageBitmap(after);
 
-                        saveBitmap(after);//保存图片
-saveImageToGallery(PicDemoActivity.this,after);
-
-
+                                saveBitmap(after);//保存图片
+                                saveImageToGallery(PicDemoActivity.this, after);
 
 
-                    //  ImageProcessor.TestForFindBall(before,ColorType.YELLOW);   //测试lookForRedBall函数
-                    //    saveImageToGallery(getBaseContext(),after);
+                                //  ImageProcessor.TestForFindBall(before,ColorType.YELLOW);   //测试lookForRedBall函数
+                                //    saveImageToGallery(getBaseContext(),after);
+                            }
+                            break;
+                            default: {
+                                super.onManagerConnected(status);
+                            }
+                            break;
+                        }
+                    }
                 }
-                break;
-                default: {
-                    super.onManagerConnected(status);
-                }
-                break;
-            }
-        }
+
+        );
     }
-
-    );
-}
 
     @Override
     protected void onPause() {
@@ -147,7 +145,7 @@ saveImageToGallery(PicDemoActivity.this,after);
         super.onPause();
     }
 
-    public  void saveImageToGallery(Context context, Bitmap bmp) {
+    public void saveImageToGallery(Context context, Bitmap bmp) {
         // 首先保存图片
         File appDir = new File(Environment.getExternalStorageDirectory(), "ArdroneCui");
         if (!appDir.exists()) {

@@ -150,7 +150,7 @@ public class ImageToCommand {
         Bitmap bitmap = loadImage();   //加载视频图像
         Mat mat = new Mat();
         Utils.bitmapToMat(bitmap, mat);
-      //  taskCommand=ImageProcessor.checkConvert(mat,ColorType.BLUE,taskCommand);//判断是否切换模式
+       taskCommand=ImageProcessor.checkConvert(mat,ColorType.BLUE,taskCommand);//判断是否切换模式
         TaskMode taskMode= taskCommand.taskMode;
         switch (taskMode) {
             case FOLLOWPATH:  //如果是沿路飞行模式

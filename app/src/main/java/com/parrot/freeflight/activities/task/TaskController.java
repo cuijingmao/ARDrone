@@ -31,10 +31,12 @@ public class TaskController {
     int end = TaskCommand.n - 1;
     int mySoundId;
     SoundPool soundPool;
+    boolean hasConverted = false;
+
     public TaskController(TaskActivity taskActivity, DroneControlService controlService) {
 
-//        soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
-//        mySoundId = soundPool.load("/raw/battery",  1);
+        soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        mySoundId = soundPool.load("/raw/battery", 1);
         this.taskActivity = taskActivity;
         this.controlService = controlService;
         imageToCommand = new ImageToCommand(taskActivity);
@@ -71,13 +73,13 @@ public class TaskController {
 //        }
 //
 //    }
-
     public void start() {
         final float gaz_roll_mod = -0.00175f;
         final float pitch_roll_mod = -0.002f;
         final double xThre = 0.1;  //表示圆形停止标记形心x相对镜头中心的最大容许偏移量
         final double yThre = 0.1;  //表示圆形停止标记形心y相对镜头中心的最大容许偏移量
         // final double power =0.05;  //表示
+
         controlThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -103,14 +105,14 @@ public class TaskController {
 //                soundPool.play(mySoundId, 1, 1, 1, -1, 1);
 //                Log.e(LOG_TAG,"after play");
 
-             //   ControlDroneActivity.playEmergencySound();
+                //   ControlDroneActivity.playEmergencySound();
                 try {
                     Thread.sleep(2000);     //让四旋翼飞一段时间，2秒
                 } catch (InterruptedException e) {
 
                     e.printStackTrace();
                 }
-          //      ControlDroneActivity.stopEmergencySound();
+                //      ControlDroneActivity.stopEmergencySound();
 
                 controlService.setGaz(0.0f);   //停止上升
 
@@ -118,6 +120,29 @@ public class TaskController {
 
                     taskCommand = imageToCommand.getCommand(taskCommand, ColorType.RED); // 寻找路径的主要函数
                     taskCommand = ImageToCommand.pidTaskCommand(taskCommand);
+
+                    /**
+                     * 此段代码用于处理转换过程
+                     * 如果要转换为跟踪小球模式并且还未转换过
+                     */
+                    if (taskCommand.convertToSeekBall && !hasConverted) {
+                        //此处可以播放音频表示要转换为跟踪小球模式
+                        int idd = soundPool.play(mySoundId, 1, 1, 1, -1, 1);
+                        try {
+                            Thread.sleep(2000);
+                            //   soundPool.stop(idd);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        soundPool.stop(idd);
+                        soundPool.release();
+
+                        hasConverted = true;  //标记为已经改过，下次不需要再放声响
+                    }
+                    /**
+                     * 此段代码用于处理转换过程
+                     */
+
                     if (taskCommand.command.equals("stable")) {//如果命令是悬停
                         controlService.setProgressiveCommandEnabled(false);//让平移指令失效
                         controlService.setYaw(0.0f);//正值向右转头，负值向左转头
@@ -133,9 +158,8 @@ public class TaskController {
                             controlService.setYaw((float) taskCommand.yaw[end]);//左右转
                             controlService.setRoll(0.0f);//不左右平移
                             controlService.setPitch(0.0f);//不前进后
-                          //     Log.e(LOG_TAG, "this line 142!");
-                        }
-                        else { //处理跟踪路径模式
+                            //     Log.e(LOG_TAG, "this line 142!");
+                        } else { //处理跟踪路径模式
                             if (taskCommand.yaw[taskCommand.n - 1] != 0) {//表示可以转头
                                 controlService.setProgressiveCommandEnabled(true);
                                 controlService.setProgressiveCommandCombinedYawEnabled(true);
@@ -184,7 +208,7 @@ public class TaskController {
     }
 
     public void stop() {
-       // controlService.triggerTakeOff();
+        // controlService.triggerTakeOff();
         ardroneStatus = -1;
         controlThread.interrupt();
     }

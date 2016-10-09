@@ -57,7 +57,7 @@ public class ImageProcessor {
         // Bitmap bitmap = image.copy(Bitmap.Config.ARGB_8888, false);
         Bitmap bitmap;
 //        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);/
-        bitmap = convertToBlackWhite(image, ColorType.RED);
+        bitmap = convertToBlackWhite(image, ColorType.BLUE);
 
 
 //        Mat mat=new Mat();
@@ -218,7 +218,10 @@ public class ImageProcessor {
                 Core.inRange(originHSV, new Scalar(70, 70, 70), new Scalar(100, 255, 255), mat);
                 break;
             case BLUE:
-                Core.inRange(originHSV, new Scalar(0, 40, 40), new Scalar(30, 255, 255), mat);
+            //    Core.inRange(originHSV, new Scalar(100,43,43), new Scalar(240, 255, 255), mat);
+                Core.inRange(originHSV, new Scalar(0, 80, 46), new Scalar(100, 255, 255), lower);  //By cui
+                Core.inRange(originHSV, new Scalar(100,43, 46), new Scalar(230, 255, 255), upper);//By cui
+                Core.addWeighted(lower, 1.0, upper, 1.0, 0.0, mat);
         }
 
         Imgproc.GaussianBlur(mat, mat, new Size(9, 9), 2, 2);  //高斯滤波
