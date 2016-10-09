@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="visible" android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:visibility="visible">
 
     <include
         android:id="@+id/header_preferences"
+        layout="@layout/incl_status_bar"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/incl_status_bar" />
+        android:layout_height="wrap_content" />
     <!--
    <RelativeLayout
        android:layout_width="match_parent"
@@ -37,65 +38,89 @@
 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:gravity="center_vertical" android:layout_marginLeft="@dimen/dashboard_button_margin_hor" android:layout_marginRight="@dimen/dashboard_button_margin_hor">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dashboard_button_margin_hor"
+        android:layout_marginRight="@dimen/dashboard_button_margin_hor"
+        android:gravity="center_vertical">
 
         <CheckedTextView
-            android:id="@+id/btnFreeFlight"
+            android:id="@+id/btnPicDemo"
             style="@style/dashboardButton"
 
-             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
+            android:layout_marginBottom="@dimen/dashboard_button_margin_vert"
+            android:layout_weight="1"
+            android:checked="false"
             android:clickable="true"
             android:lines="2"
             android:maxLines="3"
-            android:text="@string/PILOTING" android:layout_marginBottom="@dimen/dashboard_button_margin_vert" android:layout_weight="1"
-            android:checked="false" />
+            android:text="@string/PicDemo" />
 
         <CheckedTextView
-            android:id="@+id/btnAcademy"
+            android:id="@+id/btnRealPath"
             style="@style/dashboardButton"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/ARDRONE_ACADEMY" android:layout_marginBottom="@dimen/dashboard_button_margin_vert" android:layout_marginRight="@dimen/dashboard_button_margin_hor" android:layout_weight="1"
-            android:checked="false" />
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="@dimen/dashboard_button_margin_vert"
+            android:layout_marginRight="@dimen/dashboard_button_margin_hor"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="@string/RealPath" />
 
         <CheckedTextView
             android:id="@+id/btnPhotosVideos"
             style="@style/dashboardButton"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/PHOTOS_VIDEOS" android:layout_marginBottom="@dimen/dashboard_button_margin_vert" android:layout_marginLeft="@dimen/dashboard_button_margin_hor" android:layout_weight="1"
-            android:checked="false" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dashboard_button_margin_vert"
+            android:layout_marginLeft="@dimen/dashboard_button_margin_hor"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="@string/PHOTOS_VIDEOS" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:gravity="center_vertical" android:layout_marginLeft="@dimen/dashboard_button_margin_hor" android:layout_marginRight="@dimen/dashboard_button_margin_hor" android:layout_marginBottom="@dimen/dashboard_button_margin_hor">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dashboard_button_margin_hor"
+        android:layout_marginLeft="@dimen/dashboard_button_margin_hor"
+        android:layout_marginRight="@dimen/dashboard_button_margin_hor"
+        android:gravity="center_vertical">
 
         <CheckedTextView
-            android:id="@+id/btnFirmwareUpdate"
+            android:id="@+id/btnPath"
             style="@style/dashboardButton"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/ARDRONE_UPDATE" android:layout_weight="1"
-            android:checked="false" />
-
-        <CheckedTextView
-            android:id="@+id/btnGames"
-            style="@style/dashboardButton"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/GAMES" android:layout_marginLeft="@dimen/dashboard_button_margin_hor" android:layout_weight="1"
-            android:checked="false" />
+
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="@string/PATH" />
 
         <CheckedTextView
-            android:id="@+id/btnGetYourDrone"
+            android:id="@+id/btnTask"
             style="@style/dashboardButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dashboard_button_height"
-            android:text="@string/DEMO" android:layout_marginLeft="@dimen/dashboard_button_margin_hor" android:layout_weight="1"
-            android:checked="false" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="@dimen/dashboard_button_margin_hor"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="@string/TASK" />
+
+        <CheckedTextView
+            android:id="@+id/btnBall"
+            style="@style/dashboardButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="@dimen/dashboard_button_margin_hor"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="@string/BALL" />
     </LinearLayout>
 
 </LinearLayout>

@@ -6,11 +6,11 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.opengl.GLES20;
-//added by cui
-import com.parrot.freeflight.activities.image.ColorType;
-import com.parrot.freeflight.activities.image.ImageProcessor;
-//added by cui
-public class GLBGVideoSprite extends GLSprite 
+
+import com.parrot.freeflight.activities.picdemo.ColorType;
+import com.parrot.freeflight.activities.picdemo.ImageProcessor;
+
+public class GLBGVideoSprite extends GLSprite
 {
 	private static final String TAG = GLBGVideoSprite.class.getSimpleName();
 	
@@ -91,7 +91,7 @@ public class GLBGVideoSprite extends GLSprite
 		} else {
 			//added by cui
 			canvas.setBitmap(video);
-			video=ImageProcessor.convertToBlackWhite(video, ColorType.RED);
+			video= ImageProcessor.convertToBlackWhite(video, ColorType.RED);
 			//added by cui
 
 			canvas.drawBitmap(video, matrix, null);

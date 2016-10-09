@@ -27,8 +27,6 @@ import android.opengl.GLUtils;
 import android.opengl.Matrix;
 import android.os.Build;
 import android.util.Log;
-
-import com.parrot.freeflight.activities.image.ImageProcessor;
 import com.parrot.freeflight.utils.TextureUtils;
 
 public class GLSprite

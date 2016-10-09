@@ -22,12 +22,13 @@ import android.util.Log;
 
 import com.parrot.freeflight.R;
 
+import com.parrot.freeflight.activities.ball.BallActivity;
+import com.parrot.freeflight.activities.ball.BallConnectActivity;
 import com.parrot.freeflight.activities.base.DashboardActivityBase;
-import com.parrot.freeflight.activities.firm.FirmActivity;
-
-import com.parrot.freeflight.activities.firm.FirmConnectActivity;
-import com.parrot.freeflight.activities.game.GameConnectActivity;
-import com.parrot.freeflight.activities.image.ImageActivity;
+import com.parrot.freeflight.activities.path.PathConnectActivity;
+import com.parrot.freeflight.activities.picdemo.PicDemoActivity;
+import com.parrot.freeflight.activities.realpath.RealPathConnectActivity;
+import com.parrot.freeflight.activities.task.TaskConnectActivity;
 import com.parrot.freeflight.receivers.DroneAvailabilityDelegate;
 import com.parrot.freeflight.receivers.DroneAvailabilityReceiver;
 import com.parrot.freeflight.receivers.DroneConnectionChangeReceiverDelegate;
@@ -184,44 +185,21 @@ implements
 
 
     @Override
-    protected boolean onStartFreeflight()
+    protected boolean onStartPicDemo()
     {
-        if (!droneOnNetwork)
-        {
-            return false;
-        }
+//        if (!droneOnNetwork)
+//        {
+//            return false;
+//        }
 
-        Intent connectActivity = new Intent(this, ConnectActivity.class);
+        Intent connectActivity = new Intent(this,PicDemoActivity.class);
         startActivity(connectActivity);
 
         return true;
     }
     
     
-    @Override
-    protected boolean onStartFirmwareUpdate() 
-    {  //commented by cui
-//        if (firmwareUpdateAvailable) {
-//            if (mService != null && mService.isUSBInserted() && !FirmwareUpdateService.isRunning()) {
-//                onNotifyAboutUSBStickRemove();
-//            } else {
-//                Intent updatefirmwareActivity = new Intent(this, UpdateFirmwareActivity.class);
-//                startActivity(updatefirmwareActivity);
-//            }
-//        }
-        //commented by cui
-        //added by cui
-        if (!droneOnNetwork)
-        {
-            return false;
-        }
-        Log.e("注意","准备跳转至ViewTest.class");
-        Intent Test= new Intent(this, FirmConnectActivity.class);
-        startActivity(Test);
-        Log.e("注意","准备跳转至ViewTest.class");
-        return true;
-        //added by cui
-    }
+
     
     
     protected void onUSBStickRemoveDialogDismissed()
@@ -231,50 +209,68 @@ implements
     }
 
     
+
+    
+    
     @Override
-    protected boolean onStartGuestSpace() 
+    protected boolean onStartRealPath()
     {
-        Intent intent = new Intent(this, ImageActivity.class);
-        startActivity(intent);
-        
-        return true;
-    }
-    
-    
-    @Override
-    protected boolean onStartAcademy()
-    {//commented by cui
-//        Intent intent = new Intent(this, BrowserActivity.class);
-//        intent.putExtra(BrowserActivity.URL, getString(R.string.url_aa_register));
-//        startActivity(intent);
-//           return true;
-     // commented by cui
-        //added by cui
         if (!droneOnNetwork)
         {
             return false;
         }
 
-        Intent connectActivity = new Intent(this, ConnectActivity.class);
-        Log.e("注意！","由DashboardActivity跳转至ConnectActivityCui.class");
+        Intent connectActivity = new Intent(this,RealPathConnectActivity.class);
         try {
             startActivity(connectActivity);
         }
         catch (Exception e){
-            Log.e("注意！","跳转startActivity(connectActivity)时出错！！！");
             e.printStackTrace();
         }
         return true;
-        //added by cui
     }
-    
-    
+
     @Override
     protected boolean onStartPhotosVideos()
     {
         Intent intent = new Intent(this, MediaActivity.class);
         startActivity(intent);
     
+        return true;
+    }
+    @Override
+    protected boolean onStartPath()
+    {
+        if (!droneOnNetwork)
+        {
+            return false;
+        }
+        Intent Test= new Intent(this, PathConnectActivity.class);
+        startActivity(Test);
+        return true;
+    }
+    @Override
+    protected boolean onStartTask() {
+        if (!droneOnNetwork)
+        {
+            return false;
+        }
+
+        Intent taskConnectActivity = new Intent(this, TaskConnectActivity.class);
+        startActivity(taskConnectActivity);
+
+        return true;
+    }
+    @Override
+    protected boolean onStartBall()
+    {
+        if (!droneOnNetwork)
+        {
+            return false;
+        }
+        Intent intent = new Intent(this, BallConnectActivity.class);
+        startActivity(intent);
+
         return true;
     }
 
@@ -570,16 +566,5 @@ implements
         return droneOnNetwork;
     }
 
-    @Override
-    protected boolean onStartGames() {
-        if (!droneOnNetwork)
-        {
-            return false;
-        }
 
-        Intent gameConnectActivity = new Intent(this, GameConnectActivity.class);
-        startActivity(gameConnectActivity);
-
-        return true;
-    }
 }

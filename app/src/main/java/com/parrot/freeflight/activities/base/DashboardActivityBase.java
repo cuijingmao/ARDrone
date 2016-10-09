@@ -37,12 +37,12 @@ MediaStorageReceiverDelegate
 	
 	private StatusBar header = null;
 	
-	private CheckedTextView btnFreeFlight;
-	private CheckedTextView btnAcademy;
+	private CheckedTextView btnPicDemo;
+	private CheckedTextView btnRealPath;
 	private CheckedTextView btnPhotosVideos;
-	private CheckedTextView btnFirmwareUpdate;
-	private CheckedTextView btnParrotGames;
-	private CheckedTextView btnGetYourDrone;
+	private CheckedTextView btnPath;
+	private CheckedTextView btnTask;
+	private CheckedTextView btnBall;
 
     private AlertDialog alertDialog;
 
@@ -60,19 +60,19 @@ MediaStorageReceiverDelegate
 		int screenWidth = size.x;
 		int screenHeight = size.y;
 
-		btnFreeFlight = (CheckedTextView) findViewById(R.id.btnFreeFlight);
-		btnAcademy = (CheckedTextView) findViewById(R.id.btnAcademy);
+		btnPicDemo = (CheckedTextView) findViewById(R.id.btnPicDemo);
+		btnRealPath = (CheckedTextView) findViewById(R.id.btnRealPath);
 		btnPhotosVideos = (CheckedTextView) findViewById(R.id.btnPhotosVideos);
-		btnFirmwareUpdate = (CheckedTextView) findViewById(R.id.btnFirmwareUpdate);
-		btnParrotGames = (CheckedTextView) findViewById(R.id.btnGames);
-		btnGetYourDrone = (CheckedTextView) findViewById(R.id.btnGetYourDrone);
+		btnPath = (CheckedTextView) findViewById(R.id.btnPath);
+		btnTask = (CheckedTextView) findViewById(R.id.btnTask);
+		btnBall = (CheckedTextView) findViewById(R.id.btnBall);
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(screenWidth /3, (screenHeight-28)/2);
-		btnFreeFlight.setLayoutParams(layoutParams);
-		btnAcademy.setLayoutParams(layoutParams);
+		btnPicDemo.setLayoutParams(layoutParams);
+		btnRealPath.setLayoutParams(layoutParams);
 		btnPhotosVideos.setLayoutParams(layoutParams);
-		btnFirmwareUpdate.setLayoutParams(layoutParams);
-		btnParrotGames.setLayoutParams(layoutParams);
-		btnGetYourDrone.setLayoutParams(layoutParams);
+		btnPath.setLayoutParams(layoutParams);
+		btnTask.setLayoutParams(layoutParams);
+		btnBall.setLayoutParams(layoutParams);
 		// added by cui
 		View headerView = findViewById(R.id.header_preferences);
 
@@ -92,23 +92,23 @@ MediaStorageReceiverDelegate
 
     private void initUI() 
 	{
-		btnFreeFlight     = (CheckedTextView) findViewById(R.id.btnFreeFlight);
-		btnAcademy        = (CheckedTextView) findViewById(R.id.btnAcademy);
+		btnPicDemo     = (CheckedTextView) findViewById(R.id.btnPicDemo);
+		btnRealPath        = (CheckedTextView) findViewById(R.id.btnRealPath);
 		btnPhotosVideos   = (CheckedTextView) findViewById(R.id.btnPhotosVideos);
-		btnFirmwareUpdate = (CheckedTextView) findViewById(R.id.btnFirmwareUpdate);
-		btnParrotGames    = (CheckedTextView) findViewById(R.id.btnGames);
-		btnGetYourDrone   = (CheckedTextView) findViewById(R.id.btnGetYourDrone);
+		btnPath = (CheckedTextView) findViewById(R.id.btnPath);
+		btnTask    = (CheckedTextView) findViewById(R.id.btnTask);
+		btnBall   = (CheckedTextView) findViewById(R.id.btnBall);
 	}
 
 
 	private void initListeners()
 	{
-		btnFreeFlight.setOnClickListener(this);
-		btnAcademy.setOnClickListener(this);
+		btnPicDemo.setOnClickListener(this);
+		btnRealPath.setOnClickListener(this);
 		btnPhotosVideos.setOnClickListener(this);
-		btnFirmwareUpdate.setOnClickListener(this);
-		btnParrotGames.setOnClickListener(this);
-		btnGetYourDrone.setOnClickListener(this);
+		btnPath.setOnClickListener(this);
+		btnTask.setOnClickListener(this);
+		btnBall.setOnClickListener(this);
 	}
 
 	
@@ -149,12 +149,12 @@ MediaStorageReceiverDelegate
 		if (Looper.myLooper() == null)
 			throw new IllegalStateException("Should be called from UI thread");
 
-		btnFreeFlight.setChecked(isFreeFlightEnabled());
-		btnAcademy.setChecked(isAcademyEnabled());
+		btnPicDemo.setChecked(isFreeFlightEnabled());
+		btnRealPath.setChecked(isAcademyEnabled());
 		btnPhotosVideos.setChecked(getPhotoVideoState().equals(EPhotoVideoState.READY));
-		btnFirmwareUpdate.setChecked(isFirmwareUpdateEnabled());
-		btnParrotGames.setChecked(isParrotGamesEnabled());
-		btnGetYourDrone.setChecked(isGuestSpaceEnabled());
+		btnPath.setChecked(isFirmwareUpdateEnabled());
+		btnTask.setChecked(isParrotGamesEnabled());
+		btnBall.setChecked(isGuestSpaceEnabled());
 	}
 
 	
@@ -162,15 +162,16 @@ MediaStorageReceiverDelegate
 	{
 		switch (v.getId())
 		{
-			case R.id.btnFreeFlight:
+			case R.id.btnPicDemo:
 				// Open freeflight
-				if (!isFreeFlightEnabled() || !onStartFreeflight())
+			//	if (!isFreeFlightEnabled() || !onStartPicDemo())
+				if ( !onStartPicDemo())
 				{
 					showErrorMessageForTime(v, getString(R.string.wifi_not_available_please_connect_device_to_drone), 2000);
 				}
 
 				break;
-			case R.id.btnAcademy:
+			case R.id.btnRealPath:
 				//commented by cui
 //				// Open academy
 //				if (!isAcademyEnabled() || !onStartAcademy())
@@ -179,7 +180,7 @@ MediaStorageReceiverDelegate
 //				}
 				//commented by cui
 				//added by cui
-				if (!isFreeFlightEnabled() || !onStartAcademy())
+			if (!isFreeFlightEnabled() || !onStartRealPath())
 				{
 			    	showErrorMessageForTime(v, getString(R.string.wifi_not_available_please_connect_device_to_drone), 2000);
 				}
@@ -204,7 +205,7 @@ MediaStorageReceiverDelegate
 			        break;
 			    }
 				break;
-			case R.id.btnFirmwareUpdate:
+			case R.id.btnPath:
 				// Open drone update
 				//commented by cui
 //				if (!isFirmwareUpdateEnabled() || !onStartFirmwareUpdate())
@@ -213,21 +214,21 @@ MediaStorageReceiverDelegate
 //				}
 				//commented by cui
 				//added by cui
-				if (!isFreeFlightEnabled() || !onStartFirmwareUpdate())
+				if (!isFreeFlightEnabled() || !onStartPath())
 				{
 					showErrorMessageForTime(v, "wifi连接错误!!!", 2000);
 				}
 				break;
-			case R.id.btnGames:
+			case R.id.btnTask:
 				// Open Parrot Games
-				if (!isParrotGamesEnabled() || !onStartGames())
+				if (!isParrotGamesEnabled() || !onStartTask())
 				{
 					showErrorMessageForTime(v, getString(R.string.we_have_no_games_yet), 2000);
 				}
 				break;
-			case R.id.btnGetYourDrone:
+			case R.id.btnBall:
 				// Open get your drone
-				if (!isGuestSpaceEnabled() || !onStartGuestSpace())
+				if (!isGuestSpaceEnabled() || !onStartBall())
 				{
 					showErrorMessageForTime(v, getString(R.string.not_implemented_yet), 2000);
 				}
@@ -278,12 +279,12 @@ MediaStorageReceiverDelegate
 		return false;
 	}
 
-	protected boolean onStartFreeflight()
+	protected boolean onStartPicDemo()
 	{
 		return false;
 	}
 
-	protected boolean onStartAcademy()
+	protected boolean onStartRealPath()
 	{
 		return false;
 	}
@@ -293,17 +294,17 @@ MediaStorageReceiverDelegate
 		return false;
 	}
 
-	protected boolean onStartFirmwareUpdate()
+	protected boolean onStartPath()
 	{
 		return false;
 	}
 
-	protected boolean onStartGames()
+	protected boolean onStartTask()
 	{
 		return false;
 	}
 
-	protected boolean onStartGuestSpace()
+	protected boolean onStartBall()
 	{
 		return false;
 	}

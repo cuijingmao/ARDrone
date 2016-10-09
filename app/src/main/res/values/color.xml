@@ -19,7 +19,11 @@
     <color name="top_bar_title">@color/white</color>
     <color name="top_bar_background">@color/accent</color>
     <color name="bottom_bar_background">@color/top_bar_accent</color>
+    <!--此处设置6窗格的颜色值
+    -->
     <color name="dashboard_button_light">#44000000</color>
+    <!--此处设置6窗格的颜色值
+-->
     <color name="panel_dark_button_bg">#ff000000</color>
     <color name="settings_button_text_pressed">@color/settings_text_color</color>
     <color name="settings_button_text">@color/white</color>

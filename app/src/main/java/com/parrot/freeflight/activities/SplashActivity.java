@@ -248,9 +248,14 @@ public class SplashActivity
         if (videoContainer != null) {
             videoContainer.setVisibility(View.GONE);
         }
-
+        /**
+         * 此处从进入的Splash界面进入主界面
+         */
         Intent dashboard = new Intent(SplashActivity.this, DashboardActivity.class);
         startActivity(dashboard);
+        /**
+         * 此处从进入的Splash界面进入主界面
+         */
     }
     private boolean rawResourceExists(String theName)
     {

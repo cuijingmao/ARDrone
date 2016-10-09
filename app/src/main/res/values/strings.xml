@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">我的四旋翼</string>
+    <string name="app_name">智能目标识别跟踪系统</string>
     <string name="app_version">v2.0-SDK</string>
     <string name="your_changes_will_be_applied_after_rebooting_drone">Your changes will be applied after rebooting the Ar.Drone!</string>
     <string name="quit_app_reboot_drone_connect_to_network">\t- Quit application\n\t- Reboot your AR.Drone\n\t- Connect your {device} on {network} network\n\t- Launch application</string>
@@ -140,12 +140,12 @@
     <!-- browser string -->
     <string name="browser_error">Error: Could not connect to the server</string>
     <string name="browser_done">Done</string>
-    <string name="ARDRONE_ACADEMY">实时路况</string>
-    <string name="PHOTOS_VIDEOS">PHOTOS\nVIDEOS</string>
-    <string name="ARDRONE_UPDATE">更新</string>
-    <string name="PILOTING">PILOTING</string>
-    <string name="GAMES">GAMES</string>
-    <string name="DEMO">DEMO</string>
+    <string name="RealPath">实时路况</string>
+    <string name="PHOTOS_VIDEOS">照片视频</string>
+    <string name="PATH">智能跟踪路径</string>
+    <string name="PicDemo">识别效果展示</string>
+    <string name="TASK">执行任务</string>
+    <string name="BALL">跟踪目标</string>
     <string name="wifi_not_available_please_connect_device_to_drone">Wi-Fi NOT AVAILABLE, PLEASE CONNECT YOUR DEVICE TO YOUR AR.DRONE</string>
     <string name="there_is_no_flight_photos_or_videos_saved_in_your_phone">NO FLIGHT PHOTOS OR VIDEOS SAVED ON YOUR DEVICE</string>
     <string name="internet_connection_not_available">INTERNET CONNECTION NOT AVAILABLE</string>
