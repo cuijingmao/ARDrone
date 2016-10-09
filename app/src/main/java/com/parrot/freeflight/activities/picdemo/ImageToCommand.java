@@ -48,10 +48,9 @@ public class ImageToCommand {
      */
     static public TaskCommand pointToCommand(Point[] line, TaskCommand taskCommand) {
         int end = TaskCommand.n - 1;
-        if(Math.abs(taskCommand.yaw[end])<0.2 ) {
+        if (Math.abs(taskCommand.yaw[end]) < 0.2) {
             taskCommand.pitch[end] = -0.01;    //寻找路径始终保持前进
-        }
-        else{
+        } else {
             taskCommand.pitch[end] = -0.005;//路径转弯时候前进速度减慢
         }
         if (line == null) {//如果没有找到路径，
@@ -89,9 +88,8 @@ public class ImageToCommand {
                     Log.e(LOG_TAG, "飞行器左移！速度:" + taskCommand.roll[end]);
                 }
 
-            }
-            else {
-                taskCommand.roll[end]=0.0;  //此处置零防止以前时刻roll的值会一直影响下去
+            } else {
+                taskCommand.roll[end] = 0.0;  //此处置零防止以前时刻roll的值会一直影响下去
             }
             /**
              * 此处根据斜率，控制左右旋转
@@ -101,15 +99,14 @@ public class ImageToCommand {
                 if (k < 0)
                     sign = -1;  //-1代表向左
                 float power = (float) (Math.pow(2, (2 - Math.abs(k)) / 2) - 1); //角度越大，偏转速度越大
-                taskCommand.yaw[end] = sign * power / 2*1.3;
+                taskCommand.yaw[end] = sign * power / 2 * 1.3;
                 if (sign == 1) {
                     Log.e(LOG_TAG, "飞行器向右转弯,速度：" + taskCommand.yaw[end]);
                 } else {
                     Log.e(LOG_TAG, "飞行器向左转弯,速度：" + taskCommand.yaw[end]);
                 }
-            }
-            else{
-                taskCommand.yaw[end]=0.0;    //此处置零防止以前时刻yaw的值会一直影响下去
+            } else {
+                taskCommand.yaw[end] = 0.0;    //此处置零防止以前时刻yaw的值会一直影响下去
             }
             /**
              * 此处控制前进后退
@@ -129,7 +126,7 @@ public class ImageToCommand {
                 }
             } else if (line[1].y < 50 && line[0].y > 200 || (taskCommand.roll[end] == 0 && taskCommand.yaw[end] == 0)) {
                 //如果在路径正上方，直接前进
-              //  taskCommand.pitch[end] = -0.005f;//  缓慢前进
+                //  taskCommand.pitch[end] = -0.005f;//  缓慢前进
                 Log.e(LOG_TAG, "在路径正上方，直接前进,速度：" + taskCommand.pitch);
             }
 
@@ -145,15 +142,16 @@ public class ImageToCommand {
     }
 
 
-    public TaskCommand getCommand( TaskCommand taskCommand,ColorType colorType) {
+    public TaskCommand getCommand(TaskCommand taskCommand, ColorType colorType) {
 
         Bitmap bitmap = loadImage();   //加载视频图像
         Mat mat = new Mat();
         Utils.bitmapToMat(bitmap, mat);
-       taskCommand=ImageProcessor.checkConvert(mat,ColorType.BLUE,taskCommand);//判断是否切换模式
 
-        TaskMode taskMode= taskCommand.taskMode;
-        Log.e(LOG_TAG,"目前任务模式为："+taskMode);
+        taskCommand = ImageProcessor.checkConvert(mat, ColorType.BLUE, taskCommand);//判断是否切换模式
+
+        TaskMode taskMode = taskCommand.taskMode;
+        Log.e(LOG_TAG, "目前任务模式为：" + taskMode);
         switch (taskMode) {
             case FOLLOWPATH:  //如果是沿路飞行模式
                 Point[] line = ImageProcessor.findLinesP(mat, colorType);  //返回查找到的直线的两个端点
@@ -161,7 +159,7 @@ public class ImageToCommand {
                     bitmap.recycle();
                     System.gc();
                 }
-                Log.e(LOG_TAG,"before   return pointToCommand(line, taskCommand);");
+                Log.e(LOG_TAG, "before   return pointToCommand(line, taskCommand);");
                 return pointToCommand(line, taskCommand);
             case TRACKBALL:  //如果是跟踪小球模式
                 Mat hsv = ImageProcessor.hsvFilter(mat, colorType);
@@ -186,15 +184,15 @@ public class ImageToCommand {
      */
     public TaskCommand pointToCommandBall(double[] data, TaskCommand taskCommand) {
         int end = TaskCommand.n - 1;
-       taskCommand.pitch[end]=0.0;
-        taskCommand.roll[end]=0.0;
+        taskCommand.pitch[end] = 0.0;
+        taskCommand.roll[end] = 0.0;
         taskCommand.taskMode = TaskMode.TRACKBALL;
         taskCommand.colorType = ColorType.RED;
         if (data[0] == -2 || data[1] == -2 || data[2] == -2 || data[3] == -2 || data[4] == -2) {
             taskCommand.command = "stable";  //悬停
             Log.e(LOG_TAG, "未发现小球，保持悬停");
         } else {
-            double pitchThre=50; //控制前进后退的阈值
+            double pitchThre = 50; //控制前进后退的阈值
             double gazThre = 0.0; //控制上升下降速度的阈值
             double yawThre = 0.2; //控制专项速度的阈值
 //            if(Math.abs(data[4]-TaskCommand.radiusToKeep)>pitchThre)  {
@@ -216,9 +214,8 @@ public class ImageToCommand {
                 } else {
                     Log.e(LOG_TAG, "飞行器下降，速度：" + taskCommand.gaze[end]);
                 }
-            }
-            else {
-                taskCommand.gaze[end]=0.0;    //此处置零防止以前时刻gaze的值会一直影响下去
+            } else {
+                taskCommand.gaze[end] = 0.0;    //此处置零防止以前时刻gaze的值会一直影响下去
             }
             /**
              * 控制左右转头
@@ -234,13 +231,12 @@ public class ImageToCommand {
                     Log.e(LOG_TAG, "飞行器左转，速度：" + taskCommand.yaw[end]);
                 }
 
-            }
-            else {
-                taskCommand.yaw[end]=0.0 ;   //此处置零防止以前时刻yaw的值会一直影响下去
+            } else {
+                taskCommand.yaw[end] = 0.0;   //此处置零防止以前时刻yaw的值会一直影响下去
             }
         }
         Log.e(LOG_TAG, "data:" + data[2] + "," + data[3] + "," + data[4]);
-        Log.e(LOG_TAG, "command:前进速度" +(- taskCommand.pitch[end]) + "\n右偏速度" + taskCommand.roll[end] + "\n右转速度" + taskCommand.yaw[end] + "," + taskCommand.gaze[end]);
+        Log.e(LOG_TAG, "command:前进速度" + (-taskCommand.pitch[end]) + "\n右偏速度" + taskCommand.roll[end] + "\n右转速度" + taskCommand.yaw[end] + "," + taskCommand.gaze[end]);
         return taskCommand;
     }
 
@@ -421,19 +417,18 @@ public class ImageToCommand {
 
         command.centersX[n - 1] = getMean(centersX);
         command.centersY[n - 1] = getMean(centersY);
-        if (taskMode == TaskMode.FOLLOWPATH){
+        if (taskMode == TaskMode.FOLLOWPATH) {
             //此处是PD算法的核心
             command.gaze[n - 1] = gaze[n - 1] + dRatio * getMean(gazeErr);
-        command.pitch[n - 1] = pitch[n - 1] - pRatio * getMean(centersYErr) - dRatio * getMean(pitchErr);
-        command.roll[n - 1] = roll[n - 1] + pRatio * getMean(centersXErr) + dRatio * getMean(rollErr);
-       command.yaw[n - 1] = yaw[n - 1] + dRatio * getMean(yawErr);
-    }
-    else if(taskMode==TaskMode.TRACKBALL){
+            command.pitch[n - 1] = pitch[n - 1] - pRatio * getMean(centersYErr) - dRatio * getMean(pitchErr);
+            command.roll[n - 1] = roll[n - 1] + pRatio * getMean(centersXErr) + dRatio * getMean(rollErr);
+            command.yaw[n - 1] = yaw[n - 1] + dRatio * getMean(yawErr);
+        } else if (taskMode == TaskMode.TRACKBALL) {
             command.gaze[n - 1] = gaze[n - 1] + dRatio * getMean(gazeErr);
-      //      command.pitch[n - 1] = pitch[n - 1] - pRatio * getMean(centersYErr) - dRatio * getMean(pitchErr);
-          //  command.roll[n - 1] = roll[n - 1] + pRatio * getMean(centersXErr) + dRatio * getMean(rollErr);
-          command.yaw[n - 1] = yaw[n - 1] + dRatio * getMean(yawErr);
-          //  command.yaw[n - 1] = yaw[n - 1];
+            //      command.pitch[n - 1] = pitch[n - 1] - pRatio * getMean(centersYErr) - dRatio * getMean(pitchErr);
+            //  command.roll[n - 1] = roll[n - 1] + pRatio * getMean(centersXErr) + dRatio * getMean(rollErr);
+            command.yaw[n - 1] = yaw[n - 1] + dRatio * getMean(yawErr);
+            //  command.yaw[n - 1] = yaw[n - 1];
 
         }
 

@@ -221,13 +221,20 @@ public class ImageProcessor {
             case BLUE:
 
                 /**
-                 * 这段可以很好地识别紫色，但是
+                 * 这段可以很好地识别紫色，但是能识别红黄！！！
                  */
 //                Core.inRange(originHSV, new Scalar(0, 80, 46), new Scalar(100, 255, 255), lower);  //By cui
 //                Core.inRange(originHSV, new Scalar(100, 43, 46), new Scalar(230, 255, 255), upper);//By cui
 //                Core.addWeighted(lower, 1.0, upper, 1.0, 0.0, mat);
-                Core.inRange(originHSV, new Scalar(0, 80, 46), new Scalar(100, 255, 255), lower);  //By cui
-                Core.inRange(originHSV, new Scalar(150, 43, 46), new Scalar(230, 255, 255), upper);//By cui
+                /**
+                 * 很好地规避了黄，红色
+                 */
+//                Core.inRange(originHSV, new Scalar(0, 80, 46), new Scalar(10, 255, 255), lower);  //By cui
+//                Core.inRange(originHSV, new Scalar(150, 43, 46), new Scalar(230, 255, 255), upper);//By cui
+//                Core.addWeighted(lower, 1.0, upper, 1.0, 0.0, mat);
+
+                Core.inRange(originHSV, new Scalar(0, 80, 46), new Scalar(10, 255, 255), lower);  //By cui
+                Core.inRange(originHSV, new Scalar(170, 43, 46), new Scalar(200, 255, 255), upper);//By cui
                 Core.addWeighted(lower, 1.0, upper, 1.0, 0.0, mat);
         }
 
@@ -362,7 +369,7 @@ public class ImageProcessor {
         double yThre = 0.2;  //圆停止标志中心在此范围内就切换模式
         double x = data[2];
         double y = data[3];
-        if (Math.abs(x) > xThre || Math.abs(y) > yThre) {
+        if (Math.abs(x) > xThre | Math.abs(y) > yThre) {//注意||是短路或，应该用|
             taskCommand.convertToSeekBall = false;
         } else {
             taskCommand.convertToSeekBall = true;
