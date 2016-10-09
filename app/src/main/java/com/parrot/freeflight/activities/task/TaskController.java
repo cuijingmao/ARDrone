@@ -128,14 +128,14 @@ public class TaskController {
                     if (taskCommand.convertToSeekBall && !hasConverted) {
                         //此处可以播放音频表示要转换为跟踪小球模式
                         int idd = soundPool.play(mySoundId, 1, 1, 1, -1, 1);
-                        try {
-                            Thread.sleep(2000);
-                            //   soundPool.stop(idd);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+//                        try {
+//                            Thread.sleep(2000);
+//                            //   soundPool.stop(idd);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
                         soundPool.stop(idd);
-                        soundPool.release();
+                     //   soundPool.release();
 
                         hasConverted = true;  //标记为已经改过，下次不需要再放声响
                     }

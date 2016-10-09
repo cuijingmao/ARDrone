@@ -194,6 +194,7 @@ public class ImageProcessor {
 
     /**
      * hsv三通道滤波，提取特定颜色
+     *
      * @param origin RGB图像对应的Mat
      * @return
      */
@@ -218,9 +219,15 @@ public class ImageProcessor {
                 Core.inRange(originHSV, new Scalar(70, 70, 70), new Scalar(100, 255, 255), mat);
                 break;
             case BLUE:
-            //    Core.inRange(originHSV, new Scalar(100,43,43), new Scalar(240, 255, 255), mat);
+
+                /**
+                 * 这段可以很好地识别紫色，但是
+                 */
+//                Core.inRange(originHSV, new Scalar(0, 80, 46), new Scalar(100, 255, 255), lower);  //By cui
+//                Core.inRange(originHSV, new Scalar(100, 43, 46), new Scalar(230, 255, 255), upper);//By cui
+//                Core.addWeighted(lower, 1.0, upper, 1.0, 0.0, mat);
                 Core.inRange(originHSV, new Scalar(0, 80, 46), new Scalar(100, 255, 255), lower);  //By cui
-                Core.inRange(originHSV, new Scalar(100,43, 46), new Scalar(230, 255, 255), upper);//By cui
+                Core.inRange(originHSV, new Scalar(150, 43, 46), new Scalar(230, 255, 255), upper);//By cui
                 Core.addWeighted(lower, 1.0, upper, 1.0, 0.0, mat);
         }
 
@@ -228,8 +235,10 @@ public class ImageProcessor {
         origin.release();
         return mat;
     }
+
     /**
      * 查找直线，返回两个端点的像素坐标
+     *
      * @param bmp rgb图像对应的矩阵
      * @return point[0]位于point[1]下方
      */
@@ -273,10 +282,9 @@ public class ImageProcessor {
     }
 
     /**
-     *
      * @param blackWhite 经过hsvFilter滤波的二值化图
-     * @param color 需要寻找的球的颜色
-     * @return  五元数组：球心x,y像素坐标，x,y相对对坐标，球的像素半径
+     * @param color      需要寻找的球的颜色
+     * @return 五元数组：球心x,y像素坐标，x,y相对对坐标，球的像素半径
      */
     public static double[] lookForBall(Mat blackWhite, ColorType color) {
         long timePre = System.currentTimeMillis();
@@ -333,34 +341,52 @@ public class ImageProcessor {
         //   Log.d(LOG_TAG + "_lookForBall", "已定位" + color.getName() + "球位置!");
         timePos = System.currentTimeMillis();
         long timeUsed = timePos - timePre;
-         Log.e(LOG_TAG + "_lookForBall", "函数lookForBall用时：" + timeUsed + "毫秒");
+        Log.e(LOG_TAG + "_lookForBall", "函数lookForBall用时：" + timeUsed + "毫秒");
         return Ball;
     }
 
     /**
-     * @param bmp 四旋翼接收的rgb图像矩阵
-     * @param colorType  停止标志的颜色
-     * @return  是否切换任务模式的boolean变量
+     * @param bmp       四旋翼接收的rgb图像矩阵
+     * @param colorType 停止标志的颜色
+     * @return 是否切换任务模式的boolean变量
      */
-    public static TaskCommand  checkConvert(Mat bmp, ColorType colorType, TaskCommand taskCommand){
+    public static TaskCommand checkConvert(Mat bmp, ColorType colorType, TaskCommand taskCommand) {
         //如果已在跟踪小球，或者已经切换为寻找小球，就不再检测，直接返回
-        if(taskCommand.convertToSeekBall==true || taskCommand.taskMode== TaskMode.TRACKBALL)
-        {
-            return  taskCommand ;
+        if (taskCommand.taskMode == TaskMode.TRACKBALL | taskCommand.convertToSeekBall == true) {  //注意||是短路或，应该用|
+            return taskCommand;
         }
         Mat blackWhite = hsvFilter(bmp, colorType);   //hsv滤波处理
-        double[] data=lookForBall(blackWhite,colorType);
-        double xThre=0.2;
-        double yThre=0.2;  //圆停止标志中心在此范围内就切换模式
-        double x=data[2];
-        double y=data[3];
-        if(Math.abs(x)>xThre ||Math.abs(y)>yThre){
-            taskCommand.convertToSeekBall=false;
-        }else
-        {
-            taskCommand.convertToSeekBall=true;
-           taskCommand.taskMode=TaskMode.TRACKBALL;
-            Log.e(LOG_TAG,"已经切换为跟踪目标模式");
+
+        double[] data = lookForBall(blackWhite, colorType);
+        double xThre = 0.2;
+        double yThre = 0.2;  //圆停止标志中心在此范围内就切换模式
+        double x = data[2];
+        double y = data[3];
+        if (Math.abs(x) > xThre || Math.abs(y) > yThre) {
+            taskCommand.convertToSeekBall = false;
+        } else {
+            taskCommand.convertToSeekBall = true;
+            taskCommand.taskMode = TaskMode.TRACKBALL;
+            Log.e(LOG_TAG, "####################################################################################################");
+            Log.e(LOG_TAG, "####################################################################################################");
+            Log.e(LOG_TAG, "已经切换为跟踪目标模式");
+            Log.e(LOG_TAG, "已经切换为跟踪目标模式");
+            Log.e(LOG_TAG, "已经切换为跟踪目标模式");
+            Log.e(LOG_TAG, "已经切换为跟踪目标模式");
+            Log.e(LOG_TAG, "已经切换为跟踪目标模式");
+            Log.e(LOG_TAG, "已经切换为跟踪目标模式");
+            Log.e(LOG_TAG, "已经切换为跟踪目标模式");
+            Log.e(LOG_TAG, "已经切换为跟踪目标模式");
+            Log.e(LOG_TAG, "已经切换为跟踪目标模式");
+            Log.e(LOG_TAG, "已经切换为跟踪目标模式");
+            Log.e(LOG_TAG, "已经切换为跟踪目标模式");
+            Log.e(LOG_TAG, "已经切换为跟踪目标模式");
+            Log.e(LOG_TAG, "已经切换为跟踪目标模式");
+            Log.e(LOG_TAG, "已经切换为跟踪目标模式");
+            Log.e(LOG_TAG, "已经切换为跟踪目标模式");
+            Log.e(LOG_TAG, "####################################################################################################");
+            Log.e(LOG_TAG, "####################################################################################################");
+
         }
         return taskCommand;
     }
@@ -368,9 +394,10 @@ public class ImageProcessor {
     /**
      * 根据askCommand状态，做相应的动作
      * 这里调用响铃
+     *
      * @param taskCommand
      */
-    public  TaskCommand convertToSeekBall(TaskCommand taskCommand){
+    public TaskCommand convertToSeekBall(TaskCommand taskCommand) {
 
 //    try{
 //        Thread.sleep(2000);
@@ -382,10 +409,9 @@ public class ImageProcessor {
     }
 
 
-
-
     /**
      * 用于视频帧指定的色彩提取出来，显示为白色，其余的显示为黑色
+     *
      * @param video     待处理的视频帧
      * @param colorType 要被提取出来的色彩，只有RED和YELLOW可用
      * @return
@@ -399,10 +425,11 @@ public class ImageProcessor {
         Mat blackWhite = hsvFilter(mat, colorType);
         Utils.matToBitmap(blackWhite, bitmap);
         //video.recycle();
-       // System.gc();
+        // System.gc();
         return bitmap;
 
     }
+
     public static void TestForFindBall(Bitmap bitmap, ColorType colorType) {
         Mat mat = new Mat();
         Utils.bitmapToMat(bitmap, mat);

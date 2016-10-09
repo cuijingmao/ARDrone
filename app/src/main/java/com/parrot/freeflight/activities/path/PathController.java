@@ -38,6 +38,7 @@ public class PathController {
         controlThread = new Thread(new Runnable() {
             @Override
             public void run() {
+                taskCommand.taskMode=TaskMode.FOLLOWPATH;
                 controlService.switchCamera(); //切换为下摄像头
                 controlService.triggerTakeOff();//准备起飞
                 try {
@@ -73,6 +74,7 @@ public class PathController {
                     }
 
                     if (taskCommand.command.equals("stable")) {//如果命令是悬停
+                        Log.e(LOG_TAG,"处于悬停状态");
                         controlService.setProgressiveCommandEnabled(false);//让平移指令失效
                         controlService.setYaw(0.0f);//正值向右转头，负值向左转头
                         controlService.setRoll(0.0f);//正值向右平移，负值向左平移
@@ -88,18 +90,27 @@ public class PathController {
                             controlService.setRoll(0.0f);//不左右平移
                             controlService.setPitch(0.0f);//不前进后
                         } else {//处理跟踪路径模式
-                            if (taskCommand.yaw[TaskCommand.n - 1] != 0) {//表示可以转头
+                            if (taskCommand.yaw[end] != 0) {//表示可以转头
                                 controlService.setProgressiveCommandEnabled(true);
                                 controlService.setProgressiveCommandCombinedYawEnabled(true);
                                 controlService.setYaw((float) taskCommand.yaw[end]);
+                                Log.e(LOG_TAG,"当前右转速度："+taskCommand.yaw[end]);
                                 controlService.setPitch((float) taskCommand.pitch[end]);
+                                Log.e(LOG_TAG,"当前前进速度："+taskCommand.pitch[end]);
                                 controlService.setRoll((float) taskCommand.roll[end]);
+                                Log.e(LOG_TAG,"当前右偏速度："+taskCommand.yaw[end]);
                                 controlService.setGaz((float) taskCommand.gaze[end]);
+
                             } else {//如果不能转头
+                                Log.e(LOG_TAG,"不能转头！！！");
                                 controlService.setGaz((float) taskCommand.gaze[end]);
+
                                 controlService.setYaw((float) taskCommand.yaw[end]);
+                                Log.e(LOG_TAG,"当前右转速度："+taskCommand.yaw[end]);
                                 controlService.setPitch((float) taskCommand.pitch[end]);
+                                Log.e(LOG_TAG,"当前前进速度："+taskCommand.pitch[end]);
                                 controlService.setRoll((float) taskCommand.roll[end]);
+                                Log.e(LOG_TAG,"当前右偏速度："+taskCommand.yaw[end]);
                                 controlService.setProgressiveCommandEnabled(true);
                                 controlService.setProgressiveCommandCombinedYawEnabled(false);
                             }

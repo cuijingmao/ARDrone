@@ -49,7 +49,7 @@ public class PicDemoActivity extends Activity {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(screenWidth / 2, screenHeight);
         imageBefore.setLayoutParams(layoutParams);
         imageAfter.setLayoutParams(layoutParams);
-        before = BitmapFactory.decodeResource(getResources(), R.drawable.blueball);
+        before = BitmapFactory.decodeResource(getResources(), R.drawable.pictestblue);
         imageBefore.setImageBitmap(before);
 
 //

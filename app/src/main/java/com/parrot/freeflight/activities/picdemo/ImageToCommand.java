@@ -151,7 +151,9 @@ public class ImageToCommand {
         Mat mat = new Mat();
         Utils.bitmapToMat(bitmap, mat);
        taskCommand=ImageProcessor.checkConvert(mat,ColorType.BLUE,taskCommand);//判断是否切换模式
+
         TaskMode taskMode= taskCommand.taskMode;
+        Log.e(LOG_TAG,"目前任务模式为："+taskMode);
         switch (taskMode) {
             case FOLLOWPATH:  //如果是沿路飞行模式
                 Point[] line = ImageProcessor.findLinesP(mat, colorType);  //返回查找到的直线的两个端点
@@ -159,6 +161,7 @@ public class ImageToCommand {
                     bitmap.recycle();
                     System.gc();
                 }
+                Log.e(LOG_TAG,"before   return pointToCommand(line, taskCommand);");
                 return pointToCommand(line, taskCommand);
             case TRACKBALL:  //如果是跟踪小球模式
                 Mat hsv = ImageProcessor.hsvFilter(mat, colorType);
@@ -372,7 +375,6 @@ public class ImageToCommand {
      * @return
      */
     public static TaskCommand pidTaskCommand(TaskCommand taskCommand) {
-        Log.e(LOG_TAG, "this line in pidGameCommand!");
         TaskCommand command = new TaskCommand();
         ColorType colorType = taskCommand.colorType;
         TaskMode taskMode = taskCommand.taskMode;
@@ -392,8 +394,6 @@ public class ImageToCommand {
         double[] pitchErr = new double[n - 1];       //依次记录相邻两个前进后退方向上的速度的差值
         double[] rollErr = new double[n - 1];       //依次记录相邻两个左右方向上的速度的差值
         double[] yawErr = new double[n - 1];      //依次记录相邻两个角速度的差值
-
-        Log.e(LOG_TAG, "this line  before for circle!");
         try {
             for (int i = 0; i < n - 1; i++) {
                 centersXErr[i] = centersX[i + 1] - centersX[i];
@@ -437,9 +437,6 @@ public class ImageToCommand {
 
         }
 
-
-        // System.gc();   //请求系统回收垃圾
-        Log.e(LOG_TAG, " pidGameCommand already run! line 635");
         return command;
     }
 
