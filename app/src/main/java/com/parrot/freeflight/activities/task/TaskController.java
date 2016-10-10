@@ -3,10 +3,8 @@ package com.parrot.freeflight.activities.task;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.util.Log;
-
 import com.parrot.freeflight.activities.ControlDroneActivity;
-import com.parrot.freeflight.activities.picdemo.ColorType;
-import com.parrot.freeflight.activities.picdemo.ImageProcessor;
+import com.parrot.freeflight.activities.picdemo.ColorType;;
 import com.parrot.freeflight.activities.picdemo.ImageToCommand;
 import com.parrot.freeflight.service.DroneControlService;
 
@@ -98,7 +96,7 @@ public class TaskController {
                 controlService.setProgressiveCommandEnabled(false);//起飞阶段，前进指令禁用
                 controlService.setGaz(0.5f);   // 设置四旋翼的飞行速度
                 try {
-                    Thread.sleep(3000);     //让四旋翼飞一段时间，2秒
+                    Thread.sleep(4000);     //让四旋翼飞一段时间，2秒
                 } catch (InterruptedException e) {
 
                     e.printStackTrace();
@@ -117,7 +115,7 @@ public class TaskController {
                     long timePos = System.currentTimeMillis();
                     taskCommand.runTime = taskCommand.runTime + timePos - timePre;
                     Log.e(LOG_TAG, "当前运行时间：" + taskCommand.runTime + "毫秒");
-                    if (taskCommand.runTime > 25000 & hasConverted == false) {
+                    if (taskCommand.runTime >35000 & hasConverted == false) {
                         taskCommand.taskMode = TaskMode.TRACKBALL;
                         hasConverted = true;
                         controlService.switchCamera();//切换为上摄像头

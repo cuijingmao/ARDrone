@@ -49,7 +49,7 @@ public class ImageToCommand {
     static public TaskCommand pointToCommand(Point[] line, TaskCommand taskCommand) {
         int end = TaskCommand.n - 1;
         if (Math.abs(taskCommand.yaw[end]) < 0.2) {
-            taskCommand.pitch[end] = -0.01;    //寻找路径始终保持前进
+            taskCommand.pitch[end] = -0.05;    //寻找路径始终保持前进
         } else {
             taskCommand.pitch[end] = -0.002;//路径转弯时候前进速度减慢
         }
@@ -81,7 +81,7 @@ public class ImageToCommand {
                     sign = -1;     //左移
                 float power = (float) (Math.pow(2, Math.abs(center.x)) - 1); //控制速度大小
                 power = (float) (Math.pow(2, power) - 1);
-                power = power / 600;
+                power = power / 500;
                 taskCommand.roll[end] = sign * power;  //左右平移速度和方向
                 if (sign == 1) {
                     Log.e(LOG_TAG, "飞行器右移！速度：" + taskCommand.roll[end]);
@@ -100,7 +100,7 @@ public class ImageToCommand {
                 if (k < 0)
                     sign = -1;  //-1代表向左
                 float power = (float) (Math.pow(2, (2 - Math.abs(k)) / 2) - 1); //角度越大，偏转速度越大
-                taskCommand.yaw[end] = sign * power / 2 * 1.3;
+                taskCommand.yaw[end] = sign * power / 2 * 1.5;
                 if (sign == 1) {
                     Log.e(LOG_TAG, "飞行器向右转弯,速度：" + taskCommand.yaw[end]);
                 } else {
@@ -130,6 +130,7 @@ public class ImageToCommand {
                  taskCommand.pitch[end] = -0.005f;//  缓慢前进
                 Log.e(LOG_TAG, "在路径正上方，直接前进,速度：" + taskCommand.pitch[end]);
             }
+
 
 
             if (line != null)
@@ -197,7 +198,7 @@ public class ImageToCommand {
             double gazThre = 0.0; //控制上升下降速度的阈值
             double yawThre = 0.2; //控制专项速度的阈值
             if (Math.abs(data[4] - TaskCommand.radiusToKeep) > pitchThre) {
-                taskCommand.pitch[end] = (data[4] - TaskCommand.radiusToKeep) / 10000;  //如果图像中球的半径大于阈值，则适当后退，否则适当后退
+                taskCommand.pitch[end] = (data[4] - TaskCommand.radiusToKeep) / 1000;  //如果图像中球的半径大于阈值，则适当后退，否则适当后退
             } else {
                 taskCommand.pitch[end] = 0.0;   //如果远近合适就不再前进后退
             }
@@ -224,7 +225,7 @@ public class ImageToCommand {
                 int sign = 1;   //右转
                 if (data[3] < 0)
                     sign = -1;  //左转
-                taskCommand.yaw[end] = (float) data[3] * 0.8;//乘以1.5太大
+                taskCommand.yaw[end] = (float) data[3]*0.8 ;//乘以1.5太大
                 if (sign > 0) {
                     Log.e(LOG_TAG, "飞行器右转，速度：" + taskCommand.yaw[end]);
                 } else {

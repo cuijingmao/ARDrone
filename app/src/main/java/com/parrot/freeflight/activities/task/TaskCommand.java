@@ -10,7 +10,7 @@ public class TaskCommand {
     public String command;
     public   ColorType colorType;
     public   TaskMode taskMode;
-    public static int n =7;                                //多存多少个最近值来进行pid控制
+    public static int n =5;                                //多存多少个最近值来进行pid控制
     public double[] centersX = new double[n];//保存最近n个点的x相对坐标
     public double[] centersY = new double[n]; //保存最近n个点的y坐标
     public double[] gaze = new double[n];    //gaze正表示上升，负表示下降

@@ -57,7 +57,7 @@ public class ImageProcessor {
         // Bitmap bitmap = image.copy(Bitmap.Config.ARGB_8888, false);
         Bitmap bitmap;
 //        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);/
-        bitmap = convertToBlackWhite(image, ColorType.BLUE);
+        bitmap = convertToBlackWhite(image, ColorType.RED);
 
 
 //        Mat mat=new Mat();
