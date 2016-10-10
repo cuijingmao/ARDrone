@@ -94,23 +94,16 @@ public class PathController {
                                 controlService.setProgressiveCommandEnabled(true);
                                 controlService.setProgressiveCommandCombinedYawEnabled(true);
                                 controlService.setYaw((float) taskCommand.yaw[end]);
-                                Log.e(LOG_TAG,"当前右转速度："+taskCommand.yaw[end]);
                                 controlService.setPitch((float) taskCommand.pitch[end]);
-                                Log.e(LOG_TAG,"当前前进速度："+taskCommand.pitch[end]);
                                 controlService.setRoll((float) taskCommand.roll[end]);
-                                Log.e(LOG_TAG,"当前右偏速度："+taskCommand.yaw[end]);
                                 controlService.setGaz((float) taskCommand.gaze[end]);
 
                             } else {//如果不能转头
-                                Log.e(LOG_TAG,"不能转头！！！");
                                 controlService.setGaz((float) taskCommand.gaze[end]);
 
                                 controlService.setYaw((float) taskCommand.yaw[end]);
-                                Log.e(LOG_TAG,"当前右转速度："+taskCommand.yaw[end]);
                                 controlService.setPitch((float) taskCommand.pitch[end]);
-                                Log.e(LOG_TAG,"当前前进速度："+taskCommand.pitch[end]);
                                 controlService.setRoll((float) taskCommand.roll[end]);
-                                Log.e(LOG_TAG,"当前右偏速度："+taskCommand.yaw[end]);
                                 controlService.setProgressiveCommandEnabled(true);
                                 controlService.setProgressiveCommandCombinedYawEnabled(false);
                             }

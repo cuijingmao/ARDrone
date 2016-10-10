@@ -51,11 +51,12 @@ public class ImageToCommand {
         if (Math.abs(taskCommand.yaw[end]) < 0.2) {
             taskCommand.pitch[end] = -0.01;    //寻找路径始终保持前进
         } else {
-            taskCommand.pitch[end] = -0.005;//路径转弯时候前进速度减慢
+            taskCommand.pitch[end] = -0.002;//路径转弯时候前进速度减慢
         }
         if (line == null) {//如果没有找到路径，
             taskCommand.command = "stable";  //让四旋翼悬停
         } else {     //如果找到路径
+            taskCommand.command="";
             float k = 100.0f;
             Point center = new Point();   //形心位置
             if (line == null) {
@@ -122,13 +123,14 @@ public class ImageToCommand {
                 if (sign == 1) {
                     Log.e(LOG_TAG, "飞行器后退！");
                 } else {
-                    Log.e(LOG_TAG, "飞行器后退！速度：" + taskCommand.pitch[end]);
+                    Log.e(LOG_TAG, "飞行器前进！速度：" + taskCommand.pitch[end]);
                 }
             } else if (line[1].y < 50 && line[0].y > 200 || (taskCommand.roll[end] == 0 && taskCommand.yaw[end] == 0)) {
                 //如果在路径正上方，直接前进
-                //  taskCommand.pitch[end] = -0.005f;//  缓慢前进
-                Log.e(LOG_TAG, "在路径正上方，直接前进,速度：" + taskCommand.pitch);
+                 taskCommand.pitch[end] = -0.005f;//  缓慢前进
+                Log.e(LOG_TAG, "在路径正上方，直接前进,速度：" + taskCommand.pitch[end]);
             }
+
 
             if (line != null)
                 Log.d(LOG_TAG, "line:" + line[0].x + "," + line[0].y + ";" + line[1].x + "," + line[1].y);
@@ -137,7 +139,7 @@ public class ImageToCommand {
         }
 
 
-        Log.d(LOG_TAG, "command:" + taskCommand.pitch[end] + "," + taskCommand.roll[end] + "," + taskCommand.yaw[end]);
+        Log.d(LOG_TAG, "command:"+taskCommand.command+" " + taskCommand.pitch[end] + "," + taskCommand.roll[end] + "," + taskCommand.yaw[end]);
         return taskCommand;
     }
 
@@ -147,9 +149,7 @@ public class ImageToCommand {
         Bitmap bitmap = loadImage();   //加载视频图像
         Mat mat = new Mat();
         Utils.bitmapToMat(bitmap, mat);
-
-        taskCommand = ImageProcessor.checkConvert(mat, ColorType.BLUE, taskCommand);//判断是否切换模式
-
+        //taskCommand = ImageProcessor.checkConvert(mat, ColorType.BLUE, taskCommand);//判断是否切换模式
         TaskMode taskMode = taskCommand.taskMode;
         Log.e(LOG_TAG, "目前任务模式为：" + taskMode);
         switch (taskMode) {
@@ -159,7 +159,6 @@ public class ImageToCommand {
                     bitmap.recycle();
                     System.gc();
                 }
-                Log.e(LOG_TAG, "before   return pointToCommand(line, taskCommand);");
                 return pointToCommand(line, taskCommand);
             case TRACKBALL:  //如果是跟踪小球模式
                 Mat hsv = ImageProcessor.hsvFilter(mat, colorType);
@@ -170,7 +169,8 @@ public class ImageToCommand {
                 }
                 return pointToCommandBall(data, taskCommand);
         }
-        return new TaskCommand();
+
+        return taskCommand;
 
     }
 
@@ -188,19 +188,19 @@ public class ImageToCommand {
         taskCommand.roll[end] = 0.0;
         taskCommand.taskMode = TaskMode.TRACKBALL;
         taskCommand.colorType = ColorType.RED;
-        if (data[0] == -2 || data[1] == -2 || data[2] == -2 || data[3] == -2 || data[4] == -2) {
+        if (data[0] == -2.0 || data[1] == -2.0 || data[2] == -2.0 || data[3] == -2.0 || data[4] == -2.0) {
             taskCommand.command = "stable";  //悬停
             Log.e(LOG_TAG, "未发现小球，保持悬停");
         } else {
+            taskCommand.command="";
             double pitchThre = 50; //控制前进后退的阈值
             double gazThre = 0.0; //控制上升下降速度的阈值
             double yawThre = 0.2; //控制专项速度的阈值
-//            if(Math.abs(data[4]-TaskCommand.radiusToKeep)>pitchThre)  {
-//                taskCommand.pitch[end]=(data[4]-TaskCommand.radiusToKeep)/10000;  //如果图像中球的半径大于阈值，则适当后退，否则适当后退
-//            }
-//            else{
-//                taskCommand.pitch[end]=0.0;   //如果远近合适就不再前进后退
-//            }
+            if (Math.abs(data[4] - TaskCommand.radiusToKeep) > pitchThre) {
+                taskCommand.pitch[end] = (data[4] - TaskCommand.radiusToKeep) / 10000;  //如果图像中球的半径大于阈值，则适当后退，否则适当后退
+            } else {
+                taskCommand.pitch[end] = 0.0;   //如果远近合适就不再前进后退
+            }
             /**
              * 控制上升下降
              */
@@ -224,7 +224,7 @@ public class ImageToCommand {
                 int sign = 1;   //右转
                 if (data[3] < 0)
                     sign = -1;  //左转
-                taskCommand.yaw[end] = (float) data[3] * 1.0;//乘以1.5太大
+                taskCommand.yaw[end] = (float) data[3] * 0.8;//乘以1.5太大
                 if (sign > 0) {
                     Log.e(LOG_TAG, "飞行器右转，速度：" + taskCommand.yaw[end]);
                 } else {
@@ -371,8 +371,17 @@ public class ImageToCommand {
      * @return
      */
     public static TaskCommand pidTaskCommand(TaskCommand taskCommand) {
+        //      long timePre = System.currentTimeMillis();
         TaskCommand command = new TaskCommand();
-        ColorType colorType = taskCommand.colorType;
+        taskCommand.cloneTo(command);
+//        try{
+//}
+//        catch (Exception e){
+//            e.printStackTrace();
+//        }
+      // TaskCommand.cloneTo(taskCommand,command);
+ Log.e(LOG_TAG,"command的command字段是:"+command.command);
+
         TaskMode taskMode = taskCommand.taskMode;
         double[] centersX = taskCommand.centersX;    //中心点的x相对坐标
         double[] centersY = taskCommand.centersY;   //中心点的y相对坐标
@@ -399,7 +408,6 @@ public class ImageToCommand {
                 rollErr[i] = roll[i + 1] - roll[i];
                 yawErr[i] = yaw[i + 1] - yaw[i];
                 //时间推移
-
                 command.centersX[i] = centersX[i + 1];
                 command.centersY[i] = centersY[i + 1];
                 command.gaze[i] = gaze[i + 1];
@@ -431,7 +439,9 @@ public class ImageToCommand {
             //  command.yaw[n - 1] = yaw[n - 1];
 
         }
-
+//        long timePos = System.currentTimeMillis();
+//
+//        taskCommand.runTime = taskCommand.runTime + timePos - timePre;
         return command;
     }
 

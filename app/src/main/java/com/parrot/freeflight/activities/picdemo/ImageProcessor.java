@@ -234,7 +234,7 @@ public class ImageProcessor {
 //                Core.addWeighted(lower, 1.0, upper, 1.0, 0.0, mat);
 
                 Core.inRange(originHSV, new Scalar(0, 80, 46), new Scalar(10, 255, 255), lower);  //By cui
-                Core.inRange(originHSV, new Scalar(170, 43, 46), new Scalar(200, 255, 255), upper);//By cui
+                Core.inRange(originHSV, new Scalar(170, 43, 46), new Scalar(190, 255, 255), upper);//By cui
                 Core.addWeighted(lower, 1.0, upper, 1.0, 0.0, mat);
         }
 
@@ -298,6 +298,7 @@ public class ImageProcessor {
         long timePos;
         int width = blackWhite.width();
         int height = blackWhite.height();
+
         /**
          * 腐蚀膨胀操作，会让识别更加精准，
          * 但是时间会从50ms升到400ms
@@ -307,6 +308,13 @@ public class ImageProcessor {
 //        Imgproc.erode(blackWhite, blackWhite, erodeStruct);
 //        Imgproc.dilate(blackWhite, blackWhite, dilateStruct);
         double[] Ball = {-2.0, -2.0, -2.0, -2.0, -2.0};
+//
+//        int whiteNumber = countWhitePixels(blackWhite);
+//        if (whiteNumber < 500) {
+//            Log.e(LOG_TAG, "未找到 " + color.getName() + "小球");
+//            return Ball;
+//        }
+                ;
         int iCannyUpperThreshold = 100;
         int iMinRadius = 20;
         int iMaxRadius = 300;
@@ -319,6 +327,7 @@ public class ImageProcessor {
         size.width = 0;
         double fx = scale;   //宽度缩放比例
         double fy = scale;  //长度缩放比例
+
         Mat resizedMat = new Mat();
         Imgproc.resize(blackWhite, resizedMat, size, fx, fy, Imgproc.INTER_LINEAR); //线性插值，缩小图形2倍
         //   Log.e(LOG_TAG + "_lookForBall", "开始定位" + color.getName() + "球！");
@@ -365,6 +374,9 @@ public class ImageProcessor {
         Mat blackWhite = hsvFilter(bmp, colorType);   //hsv滤波处理
 
         double[] data = lookForBall(blackWhite, colorType);
+        if (data[0] == -2.0 || data[1] == -2.0 || data[2] == -2.0 || data[3] == -2.0 || data[4] == -2.0) {
+            return taskCommand;
+        }
         double xThre = 0.2;
         double yThre = 0.2;  //圆停止标志中心在此范围内就切换模式
         double x = data[2];
@@ -397,6 +409,39 @@ public class ImageProcessor {
         }
         return taskCommand;
     }
+
+    /**
+     * 计数rgb图像矩阵中指定颜色的像素数
+     *
+     * @param blackWhite 黑白二值rgb格式图像
+     * @return 白色像素点的个数
+     */
+    public static int countWhitePixels(Mat blackWhite) {
+        long timePre = System.currentTimeMillis();
+        long timePos;
+        int whiteNumber = 0;
+        int width = blackWhite.width();
+        int height = blackWhite.height();
+        int pixelOneChonnal;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+
+
+                pixelOneChonnal = (int) blackWhite.get(i, j)[0];
+
+                //     Log.e(LOG_TAG,"目前像素值："+pixelOneChannal);
+                if (pixelOneChonnal == 255) {   //如果是白色
+                    whiteNumber = whiteNumber + 1;
+                }
+            }
+        }
+        timePos = System.currentTimeMillis();
+        long timeUsed = timePos - timePre;
+        Log.e(LOG_TAG, "白色像素数目：" + whiteNumber);
+        Log.e(LOG_TAG, "函数countWhitePixels用时：" + timeUsed + "毫秒！");
+        return whiteNumber;
+    }
+
 
     /**
      * 根据askCommand状态，做相应的动作

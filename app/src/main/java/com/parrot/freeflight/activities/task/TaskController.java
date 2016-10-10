@@ -41,6 +41,7 @@ public class TaskController {
         this.controlService = controlService;
         imageToCommand = new ImageToCommand(taskActivity);
         commandTimer = new Timer();
+
     }
 
     /**
@@ -83,11 +84,12 @@ public class TaskController {
         controlThread = new Thread(new Runnable() {
             @Override
             public void run() {
+                taskCommand.taskMode = TaskMode.FOLLOWPATH;
                 controlService.switchCamera(); //切换为下摄像头
                 controlService.triggerTakeOff();//准备起飞
 
                 try {
-                    Thread.sleep(1000);     // wait takeoff
+                    Thread.sleep(4000);     // wait takeoff
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -96,59 +98,72 @@ public class TaskController {
                 controlService.setProgressiveCommandEnabled(false);//起飞阶段，前进指令禁用
                 controlService.setGaz(0.5f);   // 设置四旋翼的飞行速度
                 try {
-                    Thread.sleep(2000);     //让四旋翼飞一段时间，2秒
+                    Thread.sleep(3000);     //让四旋翼飞一段时间，2秒
                 } catch (InterruptedException e) {
 
                     e.printStackTrace();
                 }
-//                Log.e(LOG_TAG,"before play");
-//                soundPool.play(mySoundId, 1, 1, 1, -1, 1);
-//                Log.e(LOG_TAG,"after play");
 
-                //   ControlDroneActivity.playEmergencySound();
-                try {
-                    Thread.sleep(2000);     //让四旋翼飞一段时间，2秒
-                } catch (InterruptedException e) {
-
-                    e.printStackTrace();
-                }
                 //      ControlDroneActivity.stopEmergencySound();
 
                 controlService.setGaz(0.0f);   //停止上升
-
+                taskCommand.runTime = 0;
                 while (ardroneStatus == 0 && !Thread.currentThread().isInterrupted()) {
-
+                    long timePre = System.currentTimeMillis();
                     taskCommand = imageToCommand.getCommand(taskCommand, ColorType.RED); // 寻找路径的主要函数
+
                     taskCommand = ImageToCommand.pidTaskCommand(taskCommand);
 
-                    /**
-                     * 此段代码用于处理转换过程
-                     * 如果要转换为跟踪小球模式并且还未转换过
-                     */
-                    if (taskCommand.convertToSeekBall && !hasConverted) {
-                        //此处可以播放音频表示要转换为跟踪小球模式
-                        int idd = soundPool.play(mySoundId, 1, 1, 1, -1, 1);
-//                        try {
-//                            Thread.sleep(2000);
-//                            //   soundPool.stop(idd);
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-                        soundPool.stop(idd);
-                     //   soundPool.release();
+                    long timePos = System.currentTimeMillis();
+                    taskCommand.runTime = taskCommand.runTime + timePos - timePre;
+                    Log.e(LOG_TAG, "当前运行时间：" + taskCommand.runTime + "毫秒");
+                    if (taskCommand.runTime > 25000 & hasConverted == false) {
+                        taskCommand.taskMode = TaskMode.TRACKBALL;
+                        hasConverted = true;
+                        controlService.switchCamera();//切换为上摄像头
+                        Log.e(LOG_TAG, "*************************************************************************");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "已经切换为跟踪目标模式！！！");
+                        Log.e(LOG_TAG, "*************************************************************************");
+                    } else {
 
-                        hasConverted = true;  //标记为已经改过，下次不需要再放声响
                     }
                     /**
                      * 此段代码用于处理转换过程
                      */
-
+                    Log.e(LOG_TAG, "控制飞行前：");
                     if (taskCommand.command.equals("stable")) {//如果命令是悬停
                         controlService.setProgressiveCommandEnabled(false);//让平移指令失效
                         controlService.setYaw(0.0f);//正值向右转头，负值向左转头
                         controlService.setRoll(0.0f);//正值向右平移，负值向左平移
                         controlService.setPitch(0.0f);//正值向后，负值向前
                         controlService.setGaz(0.0f);//正值上升，负值下降
+
                     } else {
 
                         if (taskCommand.taskMode == TaskMode.TRACKBALL) {//如果是跟踪小球模式
@@ -158,7 +173,7 @@ public class TaskController {
                             controlService.setYaw((float) taskCommand.yaw[end]);//左右转
                             controlService.setRoll(0.0f);//不左右平移
                             controlService.setPitch(0.0f);//不前进后
-                            //     Log.e(LOG_TAG, "this line 142!");
+
                         } else { //处理跟踪路径模式
                             if (taskCommand.yaw[taskCommand.n - 1] != 0) {//表示可以转头
                                 controlService.setProgressiveCommandEnabled(true);

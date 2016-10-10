@@ -49,9 +49,9 @@ public class PicDemoActivity extends Activity {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(screenWidth / 2, screenHeight);
         imageBefore.setLayoutParams(layoutParams);
         imageAfter.setLayoutParams(layoutParams);
-        before = BitmapFactory.decodeResource(getResources(), R.drawable.pictestblue);
+        before = BitmapFactory.decodeResource(getResources(), R.drawable.redpath1);
         imageBefore.setImageBitmap(before);
-
+//byte b=[1 ,0 ,1,0,1,0,0,0]
 //
 //        MediaPlayer  player=MediaPlayer.create(this,R.raw.battery);
 //
